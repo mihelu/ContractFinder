@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profilesXml xmlns="http://maven.apache.org/PROFILES/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/PROFILES/1.0.0 http://maven.apache.org/xsd/profiles-1.0.0.xsd">
+    <profiles>
+        <profile>
+            <id>MS_LOCAL</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <project.stage>Development</project.stage>
+                <tomcat.username>msala</tomcat.username>
+                <tomcat.password>msala</tomcat.password>
+                <tomcat.host>localhost</tomcat.host>
+                <tomcat.port>8181</tomcat.port>
+                <naming.url>127.0.0.1:1099</naming.url>
+                <application.name>ContractFinder</application.name>
+                <log.root.dir>${catalina.base}/logs</log.root.dir>
+            </properties>
+        </profile>
+    </profiles>
+</profilesXml>

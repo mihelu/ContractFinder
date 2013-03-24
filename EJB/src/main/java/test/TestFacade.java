@@ -1,3 +1,5 @@
+package test;
+
 import javax.ejb.Stateless;
 
 /**
@@ -7,8 +9,9 @@ import javax.ejb.Stateless;
  * Time: 20:51
  */
 @Stateless
-public class TestService {
+public class TestFacade implements TestFacadeRemote {
 
+    @Override
     public String test() {
         return "TEST_FROM_EJB";
     }

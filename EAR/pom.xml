@@ -33,22 +33,58 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-ear-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jboss-maven-plugin</artifactId>
+                <version>1.5.0</version>
                 <configuration>
-                    <modules>
-                        <ejbModule>
-                            <groupId>pl.edu.pk.msala</groupId>
-                            <artifactId>EJB</artifactId>
-                        </ejbModule>
-                    </modules>
+                    <hostName>${appserver.host}</hostName>
+                    <port>${appserver.port}</port>
+                    <fileNames>
+                        <fileName>${ear.path}</fileName>
+                    </fileNames>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.3.3</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <version>6</version>
+                    <defaultLibBundleDir>/lib</defaultLibBundleDir>
+                    <modules>
+                        <ejbModule>
+                            <groupId>${groupId}</groupId>
+                            <artifactId>EJB</artifactId>
+                            <bundleFileName>EJB.jar</bundleFileName>
+                        </ejbModule>
+                    </modules>
+                    <finalName>EAR</finalName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>
