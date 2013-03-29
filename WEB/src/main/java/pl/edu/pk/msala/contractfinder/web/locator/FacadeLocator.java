@@ -1,4 +1,4 @@
-package pl.edu.pk.msala.contractfinder.locator;
+package pl.edu.pk.msala.contractfinder.web.locator;
 
 import javax.naming.NamingException;
 

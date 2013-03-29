@@ -20,7 +20,7 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>pl.edu.pk.msala.contractfinder.rest</param-value>
+            <param-value>pl.edu.pk.msala.contractfinder.web.rest</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -35,7 +35,7 @@
     </servlet-mapping>
 
     <listener>
-        <listener-class>pl.edu.pk.msala.contractfinder.utils.WebAppConfiguration</listener-class>
+        <listener-class>pl.edu.pk.msala.contractfinder.web.utils.WebAppConfiguration</listener-class>
     </listener>
 
     <context-param>

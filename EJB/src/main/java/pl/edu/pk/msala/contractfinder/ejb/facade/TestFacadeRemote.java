@@ -1,4 +1,4 @@
-package test;
+package pl.edu.pk.msala.contractfinder.ejb.facade;
 
 import javax.ejb.Remote;
 

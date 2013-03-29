@@ -1,4 +1,4 @@
-package pl.edu.pk.msala.contractfinder.utils;
+package pl.edu.pk.msala.contractfinder.web.utils;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;

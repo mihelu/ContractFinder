@@ -1,6 +1,6 @@
-package pl.edu.pk.msala.contractfinder.locator;
+package pl.edu.pk.msala.contractfinder.web.locator;
 
-import pl.edu.pk.msala.contractfinder.utils.WebAppConfiguration;
+import pl.edu.pk.msala.contractfinder.web.utils.WebAppConfiguration;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

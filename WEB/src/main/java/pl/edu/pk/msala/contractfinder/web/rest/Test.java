@@ -1,4 +1,8 @@
-package pl.edu.pk.msala.contractfinder.rest;
+package pl.edu.pk.msala.contractfinder.web.rest;
+
+import pl.edu.pk.msala.contractfinder.ejb.facade.TestFacadeRemote;
+import pl.edu.pk.msala.contractfinder.web.locator.FacadeLocator;
+import pl.edu.pk.msala.contractfinder.web.service.TestService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,7 +21,8 @@ public class Test {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Osoba test() {
-        return new Osoba("TEST","TEST");
+        TestService.test();
+        return new Osoba("TEST", "TEST");
     }
 
     class Osoba {

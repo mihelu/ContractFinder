@@ -34,6 +34,17 @@
             <groupId>pl.edu.pk.msala</groupId>
             <artifactId>EJB</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <type>ejb-client</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>asm</groupId>
