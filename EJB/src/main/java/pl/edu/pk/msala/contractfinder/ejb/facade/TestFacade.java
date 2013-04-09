@@ -27,15 +27,12 @@ public class TestFacade implements TestFacadeRemote {
         User user = new User();
         user.setName("TEST");
         user.setLastName("TEST");
-        user = testManager.testPersist(user);
-        user = testManager.testUpdate(user);
-
         Account account = new Account();
-        account.setUser(user);
-        account.setPersonal(Boolean.TRUE);
-        account.setCreateDate(new Date());
         account.setLogin("LOGIN");
         account.setPassword("PASSWORD");
+        account.setPersonal(Boolean.TRUE);
+        account.setCreateDate(new Date());
+        account.setUser(user);
 
         testManager.createAccount(account);
 

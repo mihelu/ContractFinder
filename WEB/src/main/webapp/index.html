@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ContractFinder" ng-controller="AppCtrl">
 <head>
     <title>ContractFinder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <link href="css/angular-ui.min.css" rel="stylesheet" media="screen"/>
     <link href="css/style.css" rel="stylesheet" media="screen"/>
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/angular/ui-bootstrap-tpls-0.2.0.min.js"></script>
+    <script src="js/angular/angular-ui.min.js"></script>
+    <script src="js/app/app.js"></script>
+    <script src="js/app/controllers/appController.js"></script>
+    <script src="js/app/services/alertsService.js"></script>
 </head>
 <body>
 <div class="container">
@@ -13,22 +22,27 @@
     <div class="navbar">
         <div class="navbar-inner">
             <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
+                <li ng-class="{active: navClass('home')}"><a href="#/home">Home</a></li>
+                <li ng-class="{active: navClass('test1')}"><a href="#/test1">Link</a></li>
+                <li ng-class="{active: navClass('test2')}"><a href="#/test2">Link</a></li>
             </ul>
         </div>
     </div>
 
     <div class="row">
-        <div class="span2">TEST</div>
-        <div class="span10">TEST</div>
+        <div class="span10">
+
+            <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+
+            <div ng-view></div>
+
+        </div>
+        <div class="span2">
+            <button ng-click="addAlert()">ALERT!</button>
+            <button ng-click="clearAlerts()">CLEAR ALERTS!</button>
+        </div>
     </div>
 
 </div>
-
-
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

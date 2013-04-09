@@ -33,5 +33,6 @@ public class TestManager {
 
     public void createAccount(Account account) {
         entityManager.persist(account);
+        //throw new EJBTransactionRolledbackException("BLAD");
     }
 }

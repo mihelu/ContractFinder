@@ -28,11 +28,11 @@ public class Account {
     @Column(name = "ACC_CREATE_DATE", nullable = false)
     private Date createDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACC_USE_ID")
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACC_COM_ID")
     private Company company;
 

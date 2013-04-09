@@ -1,13 +1,13 @@
 package pl.edu.pk.msala.contractfinder.web.rest;
 
-import pl.edu.pk.msala.contractfinder.ejb.facade.TestFacadeRemote;
-import pl.edu.pk.msala.contractfinder.web.locator.FacadeLocator;
+import com.google.common.collect.Lists;
 import pl.edu.pk.msala.contractfinder.web.service.TestService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,9 +20,10 @@ public class Test {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Osoba test() {
-        TestService.test();
-        return new Osoba("TEST", "TEST");
+    public List<Osoba> test() {
+        //TestService.test();
+        List<Osoba> osoby = Lists.newArrayList(new Osoba("TEST", "TEST"), new Osoba("TEST1", "TEST1"));
+        return osoby;
     }
 
     class Osoba {
