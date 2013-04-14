@@ -1,18 +1,11 @@
-function AppCtrl($scope, $location, Alerts) {
+function AppCtrl($scope, $location, Auth, Alerts) {
 
-    $scope.alerts = Alerts.getAlerts();
+    //alerts
+    $scope.alerts = Alerts;
+    //authorization
+    $scope.credentials = {};
 
-    $scope.addAlert = function () {
-        Alerts.addAlert('success', 'TEST');
-    };
-
-    $scope.closeAlert = function (index) {
-        Alerts.closeAlert(index);
-    };
-
-    $scope.clearAlerts = function () {
-        Alerts.clearAlerts();
-    };
+    $scope.auth = Auth;
 
     $scope.navClass = function (page) {
         var currentRoute = $location.path().substring(1) || 'home';

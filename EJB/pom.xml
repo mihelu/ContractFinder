@@ -119,6 +119,7 @@
                         <clientInclude>pl/edu/pk/msala/contractfinder/ejb/entity/**</clientInclude>
                         <clientInclude>pl/edu/pk/msala/contractfinder/ejb/facade/**</clientInclude>
                         <clientInclude>pl/edu/pk/msala/contractfinder/ejb/exception/**</clientInclude>
+                        <clientInclude>pl/edu/pk/msala/contractfinder/ejb/dto/**</clientInclude>
                     </clientIncludes>
                     <ejbVersion>3.1</ejbVersion>
                 </configuration>

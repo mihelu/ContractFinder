@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "CF_ACCOUNTS")
-public class Account {
+public class Account implements Serializable{
 
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "acc_id_seq", initialValue = 1,allocationSize = 1)

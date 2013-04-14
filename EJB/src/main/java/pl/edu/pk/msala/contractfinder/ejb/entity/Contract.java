@@ -6,27 +6,24 @@ import java.io.Serializable;
 /**
  * Created with IntelliJ IDEA.
  * User: mhl
- * Date: 29.03.13
- * Time: 19:46
+ * Date: 14.04.13
+ * Time: 18:42
  */
 @Entity
-@Table(name = "CF_COMPANIES")
-public class Company implements Serializable{
+@Table(name = "CF_CONTRACTS")
+public class Contract implements Serializable{
 
     @Id
-    @SequenceGenerator(name = "pk_seq", sequenceName = "com_id_seq", initialValue = 1,allocationSize = 1)
+    @SequenceGenerator(name = "pk_seq", sequenceName = "con_id_seq", initialValue = 1,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_seq")
-    @Column(name = "COM_ID")
+    @Column(name = "CON_ID")
     private Long id;
 
-    @Column(name = "COM_NAME")
+    @Column(name = "CON_NAME",unique = false)
     private String name;
 
-    @Column(name = "COM_DESCRIPTION")
+    @Column(name = "CON_DESCRIPTION",unique = false)
     private String description;
-
-    @OneToOne(mappedBy = "company")
-    private Account account;
 
     public Long getId() {
         return id;

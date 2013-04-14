@@ -7,11 +7,11 @@
             <interceptor-class>pl.edu.pk.msala.contractfinder.ejb.interceptor.FacadeInterceptor</interceptor-class>
         </interceptor>
     </interceptors>
-
+<!--
     <assembly-descriptor>
         <interceptor-binding>
             <ejb-name>*</ejb-name>
             <interceptor-class>pl.edu.pk.msala.contractfinder.ejb.interceptor.FacadeInterceptor</interceptor-class>
         </interceptor-binding>
-    </assembly-descriptor>
+    </assembly-descriptor>-->
 </ejb-jar>

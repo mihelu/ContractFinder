@@ -1,0 +1,24 @@
+<div ui-if="!auth.isAuthorized()" >
+    <h3 class="text-center">Zaloguj się</h3>
+
+    <form>
+        <div class="control-group">
+            <label>Login</label>
+            <input type="text" name="login" ng-model="credentials.login">
+        </div>
+        <div class="control-group">
+            <label>Password</label>
+            <input type="password" name="password" ng-model="credentials.password">
+        </div>
+
+        <button ng-click="auth.login(credentials)" class="btn btn-block btn-primary">Login</button>
+    </form>
+
+    <a href="#/register" class="btn btn-block btn-danger">Załóż konto</a>
+</div>
+
+<div ui-if="auth.isAuthorized()">
+    <button ng-click="auth.logout()" class="width100">Logout</button>
+    <button ng-click="alerts.addAlert('info','test')" class="width100">ALERT!</button>
+    <button ng-click="alerts.clearAlerts()" class="width100">CLEAR ALERTS!</button>
+</div>

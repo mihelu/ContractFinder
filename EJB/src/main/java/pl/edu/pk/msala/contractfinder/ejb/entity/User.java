@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "CF_USERS")
-public class User {
+public class User implements Serializable{
 
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "use_id_seq", initialValue = 1,allocationSize = 1)
@@ -18,8 +19,8 @@ public class User {
     @Column(name = "USE_ID")
     private Long id;
 
-    @Column(name = "USE_NAME")
-    private String name;
+    @Column(name = "USE_FIRSTNAME")
+    private String firstName;
 
     @Column(name = "USE_LASTNAME")
     private String lastName;
@@ -35,12 +36,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {

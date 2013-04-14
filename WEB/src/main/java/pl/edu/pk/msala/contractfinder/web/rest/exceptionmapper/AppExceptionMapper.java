@@ -1,5 +1,7 @@
 package pl.edu.pk.msala.contractfinder.web.rest.exceptionmapper;
 
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -12,9 +14,10 @@ import javax.ws.rs.ext.Provider;
  * Time: 13:20
  */
 @Provider
-public class MyExceptionMapper implements ExceptionMapper<Exception> {
+public class AppExceptionMapper implements ExceptionMapper<AppException> {
+
     @Override
-    public Response toResponse(Exception e) {
-        return Response.status(404).entity("TEST MESSAGE FROM REST").type(MediaType.TEXT_PLAIN_TYPE).build();
+    public Response toResponse(AppException e) {
+        return Response.status(404).entity(e.getMessage()).type(MediaType.TEXT_PLAIN_TYPE).build();
     }
 }

@@ -4,7 +4,7 @@
  * Date: 31.03.13
  * Time: 21:23
  */
-var ContractFinder = angular.module("ContractFinder", ['ui.bootstrap', 'ui', 'alertsService']);
+var ContractFinder = angular.module("ContractFinder", ['ui.bootstrap', 'ui', 'alertsService','authService']);
 
 ContractFinder.config(
     function ($routeProvider) {
@@ -17,16 +17,22 @@ ContractFinder.config(
             }
         )
             .when(
-            "/test1",
+            "/create",
             {
-                templateUrl: '/templates/test1.html',
-                controller: Test1Ctrl
+                templateUrl: '/templates/create.html',
+                controller: CreateContractCtrl
             }
         ).when(
-            "/test2",
+            "/browse",
             {
-                templateUrl: '/templates/test2.html',
-                controller: Test2Ctrl
+                templateUrl: '/templates/browse.html',
+                controller: BrowseContractsCtrl
+            }
+        ).when(
+            "/register",
+            {
+                templateUrl: '/templates/register.html',
+                controller: RegisterAccountCtrl
             }
         )
             .otherwise(
@@ -36,55 +42,3 @@ ContractFinder.config(
         );
     }
 );
-
-
-function HomeCtrl($scope) {
-
-};
-
-function Test1Ctrl($scope) {
-
-};
-
-function Test2Ctrl($scope) {
-
-};
-
-function AuthController($scope, $location, $routeParams, $http) {
-
-    $scope.login = function () {
-        $scope.authorized = true;
-//        $http({method: 'GET', url: 'rest/test'}).
-
-    };
-
-    $scope.osoby = [];
-
-    $scope.loadOsoby = function () {
-        $http.get('rest/test1').
-            success(function (data, status, headers, config) {
-                console.log(status);
-                console.log("success");
-                console.log(data);
-                $scope.osoby = data;
-            }).
-            error(function (data, status, headers, config) {
-                console.log(config);
-                console.log("fail");
-                $scope.addAlert("error", "fail");
-            });
-    }
-
-    $scope.logout = function () {
-        $scope.authorized = false;
-        $location.path("home")
-    };
-
-    $scope.authorized = true;
-
-    $scope.isAuthorized = function () {
-        return $scope.authorized;
-    };
-}
-
-

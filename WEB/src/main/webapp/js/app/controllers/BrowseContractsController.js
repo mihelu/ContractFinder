@@ -1,0 +1,3 @@
+function BrowseContractsCtrl($scope) {
+
+};

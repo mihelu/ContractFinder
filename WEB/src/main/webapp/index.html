@@ -14,6 +14,11 @@
     <script src="js/angular/angular-ui.min.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/controllers/appController.js"></script>
+    <script src="js/app/controllers/homeController.js"></script>
+    <script src="js/app/controllers/createContractController.js"></script>
+    <script src="js/app/controllers/browseContractsController.js"></script>
+    <script src="js/app/controllers/registerAccountController.js"></script>
+    <script src="js/app/services/authService.js"></script>
     <script src="js/app/services/alertsService.js"></script>
 </head>
 <body>
@@ -21,25 +26,24 @@
 
     <div class="navbar">
         <div class="navbar-inner">
+            <a class="brand" href="#/home">ContractFinder</a>
             <ul class="nav">
-                <li ng-class="{active: navClass('home')}"><a href="#/home">Home</a></li>
-                <li ng-class="{active: navClass('test1')}"><a href="#/test1">Link</a></li>
-                <li ng-class="{active: navClass('test2')}"><a href="#/test2">Link</a></li>
+                <li ui-if="auth.isAuthorized()" ng-class="{active: navClass('create')}"><a href="#/create">Create</a></li>
+                <li ng-class="{active: navClass('browse')}"><a href="#/browse">Browse</a></li>
             </ul>
         </div>
     </div>
 
     <div class="row">
-        <div class="span10">
+        <div class="span9">
 
-            <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+            <alert ng-repeat="alert in alerts.getAlerts()" type="alert.type" close="alerts.closeAlert($index)">{{alert.msg}}</alert>
 
             <div ng-view></div>
 
         </div>
-        <div class="span2">
-            <button ng-click="addAlert()">ALERT!</button>
-            <button ng-click="clearAlerts()">CLEAR ALERTS!</button>
+        <div class="span3">
+            <div ng-include="'templates/userPanel.html'"></div>
         </div>
     </div>
 

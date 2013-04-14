@@ -1,7 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.interceptor;
 
 import org.apache.log4j.Logger;
-import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
@@ -24,7 +24,7 @@ public class FacadeInterceptor {
             return invocationContext.proceed();
         } catch (Exception pe) {
             logger.error("Exception in: " + method + " : " + pe.getMessage());
-            throw new AppException(pe);
+            throw new AppRollbackException(pe);
         } finally {
             //logger.info("After invoke: " + method);
         }
