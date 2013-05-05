@@ -4,10 +4,10 @@
  * Date: 31.03.13
  * Time: 21:23
  */
-var ContractFinder = angular.module("ContractFinder", ['ui.bootstrap', 'ui', 'alertsService','authService']);
+var ContractFinder = angular.module("ContractFinder", ['ui.bootstrap', 'ui', 'ngCookies', 'alertsService', 'authService']);
 
 ContractFinder.config(
-    function ($routeProvider) {
+    function ($routeProvider, $httpProvider) {
         $routeProvider
             .when(
             "/home",
@@ -34,11 +34,38 @@ ContractFinder.config(
                 templateUrl: '/templates/register.html',
                 controller: RegisterAccountCtrl
             }
+        ).when(
+            "/forbidden",
+            {
+                templateUrl: '/templates/forbidden.html'
+            }
         )
             .otherwise(
             {
                 redirectTo: "/home"
             }
-        );
+        ),
+            $httpProvider.responseInterceptors.push(function ($q, $location, Alerts,$rootScope) {
+                return function (promise) {
+                    var handleForbidden = function(response) {
+                            $location.path('forbidden');
+                            return $q.reject(response);
+                    }
+
+                    return promise.then(function (response) {
+                        return response;
+                    }, function (response) {
+                        if(response.status === 403) {
+                            return handleForbidden(response);
+                        }
+                        if(response.status === 401) {
+                            $rootScope.$broadcast("event:unauthorized");
+                            return $q.reject(response);
+                        }
+                        Alerts.fatal(response.data);
+                        return $q.reject(response);
+                    });
+                }
+            });
     }
 );

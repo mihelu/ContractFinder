@@ -1,9 +1,8 @@
 package pl.edu.pk.msala.contractfinder.web.locator;
 
-import pl.edu.pk.msala.contractfinder.web.utils.WebAppConfiguration;
+import org.apache.log4j.Logger;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.naming.*;
 import javax.rmi.PortableRemoteObject;
 import java.util.Properties;
 
@@ -13,29 +12,28 @@ import java.util.Properties;
  * Time: 15:59
  */
 public class ServiceLocator {
+
+    private static final Logger logger = Logger.getLogger(ServiceLocator.class);
     private InitialContext ic;
-    private static final String NAMING_URL = WebAppConfiguration.getParam(WebAppConfiguration.NAMING_URL);
 
     public ServiceLocator() {
         try {
-            Properties p = new Properties();
-            p.put("java.naming.factory.initial", "org.jnp.interfaces.NamingContextFactory");
-            p.put("java.naming.provider.url", NAMING_URL);
-            p.put("java.naming.factory.url.pkgs", "org.jboss.naming:org.jnp.interfaces");
-            ic = new InitialContext(p);
+            Properties jndiProps = new Properties();
+            jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+            jndiProps.put(Context.PROVIDER_URL, "remote://localhost:4447");
+            jndiProps.put(Context.SECURITY_PRINCIPAL, "jboss");
+            jndiProps.put(Context.SECURITY_CREDENTIALS, "jbosspass");
+            jndiProps.put("jboss.naming.client.ejb.context", true);
+            jndiProps.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+            jndiProps.put("jboss.naming.client.connect.options.org.xnio.Options.SASL_DISALLOWED_MECHANISMS", "JBOSS-LOCAL-USER");
+            jndiProps.put("jboss.naming.client.connect.options.org.xnio.Options.SASL_POLICY_NOPLAINTEXT", false);
+            ic = new InitialContext(jndiProps);
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }
-
     }
-
-    private Object lookup(String jndiName) throws NamingException {
-        return ic.lookup(jndiName);
-    }
-
 
     public <X extends Object> X getRemote(String jndiname, Class className) throws NamingException {
-        Object objref = lookup(jndiname);
-        return (X) PortableRemoteObject.narrow(objref, className);
+        return (X) ic.lookup(jndiname);
     }
 }

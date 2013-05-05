@@ -8,9 +8,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <appserver.port>8080</appserver.port>
-                <appserver.host>localhost</appserver.host>
-                <ear.path>${project.build.directory}/EAR.ear</ear.path>
+                <jboss-as.deployment.filename>/EAR.ear</jboss-as.deployment.filename>
             </properties>
         </profile>
     </profiles>

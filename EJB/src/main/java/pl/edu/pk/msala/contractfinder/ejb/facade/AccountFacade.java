@@ -3,6 +3,8 @@ package pl.edu.pk.msala.contractfinder.ejb.facade;
 import pl.edu.pk.msala.contractfinder.ejb.dto.AccountData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
+import pl.edu.pk.msala.contractfinder.ejb.manager.AccountManager;
 import pl.edu.pk.msala.contractfinder.ejb.service.AccountService;
 
 import javax.ejb.EJB;
@@ -19,9 +21,21 @@ public class AccountFacade implements AccountFacadeRemote {
 
     @EJB
     private AccountService accountService;
+    @EJB
+    private AccountManager accountManager;
 
     @Override
     public Account getAccount(AccountData accountData) throws AppException {
-        return accountService.login(accountData);
+        return accountService.getAccount(accountData);
+    }
+
+    @Override
+    public Account getAccount(Long id) {
+        return accountManager.getAccount(id);
+    }
+
+    @Override
+    public void createAccount(Account account) throws AppRollbackException {
+        accountService.createAccount(account);
     }
 }

@@ -1,10 +1,8 @@
-function AppCtrl($scope, $location, Auth, Alerts) {
+function AppCtrl($scope, $location, Auth, Alerts, $rootScope, $cookies) {
 
     //alerts
     $scope.alerts = Alerts;
     //authorization
-    $scope.credentials = {};
-
     $scope.auth = Auth;
 
     $scope.navClass = function (page) {
@@ -14,11 +12,25 @@ function AppCtrl($scope, $location, Auth, Alerts) {
 
     $scope.$on(
         "$routeChangeSuccess",
-        function () {
-
+        function (scope, next, current) {
             Alerts.clearAlerts();
-
+            Alerts.showAfterRouteChangeAlerts();
         }
     );
 
+    $rootScope.$on(
+        "event:unauthorized",
+        function () {
+            Alerts.addAfterRouteChangeAlert('warn', 'Wymagane zalogowanie!');
+            Auth.logout();
+        }
+    );
+
+    $scope.$watch(function () {
+        return Auth.isAuthorized()
+    }, function (newVal, oldVal) {
+        if (newVal === undefined && oldVal !== undefined) {
+            Auth.logout();
+        }
+    }, true);
 };

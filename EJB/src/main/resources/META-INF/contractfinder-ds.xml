@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+    <datasource jndi-name="java:/jboss/datasources/ContractFinder" enabled="true" use-java-context="true"
+                pool-name="ContractFinder-ds-pool">
+        <connection-url>jdbc:postgresql://127.0.0.1:5432/contractfinder</connection-url>
+        <driver>postgresql-driver</driver>
+        <security>
+            <user-name>contractfinder</user-name>
+            <password>contractfinder</password>
+        </security>
+    </datasource>
+</datasources>

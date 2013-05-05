@@ -1,1 +1,22 @@
-TEST1 INCLUDE
+<form class="form-horizontal" ng-submit="create()" novalidate>
+    <legend><h3 class="text-center">Utwórz zlecenie</h3></legend>
+    <div class="control-group">
+        <label class="control-label" for="inputName">Nazwa</label>
+
+        <div class="controls">
+            <input type="text" id="inputName" placeholder="Nazwa" ng-model="contract.name" required class="input-block-level">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputDescription">Opis</label>
+
+        <div class="controls">
+            <textarea id="inputDescription" placeholder="Opis" ng-model="contract.description" rows="6" required class="input-block-level"/>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-block btn-danger btn-large">Utwórz</button>
+        <button class="btn btn-block btn-danger btn-large" disabled>Utwórz</button>
+    </div>
+</form>

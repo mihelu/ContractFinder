@@ -9,7 +9,7 @@ import javax.naming.NamingException;
  */
 public class FacadeLocator {
 
-    private static final String JNDI_PREFIX = "EAR/";
+    private static final String JNDI_PREFIX = "java:/EAR/EJB/";
 
 
     private FacadeLocator() {
@@ -18,8 +18,8 @@ public class FacadeLocator {
     public static <T> T getFacade(Class viewClass) {
         try {
             ServiceLocator serviceLocator = new ServiceLocator();
-            System.out.println(JNDI_PREFIX + viewClass.getSimpleName().replaceAll("Remote$", "") + "/remote-" + viewClass.getCanonicalName());
-            return serviceLocator.<T>getRemote(JNDI_PREFIX + viewClass.getSimpleName().replaceAll("Remote$", "") + "/remote-" + viewClass.getCanonicalName(), viewClass);
+            System.out.println(JNDI_PREFIX + viewClass.getSimpleName().replaceAll("Remote$", "") + "!" + viewClass.getCanonicalName());
+            return serviceLocator.<T>getRemote(JNDI_PREFIX + viewClass.getSimpleName().replaceAll("Remote$", "") + "!" + viewClass.getCanonicalName(), viewClass);
         } catch (NamingException ex) {
             throw new IllegalArgumentException("Cannot locate facade: " + viewClass, ex);
         }

@@ -1,3 +1,10 @@
 .width100 {
     width: 100%;
 }
+
+form .btn, form.ng-valid .btn[disabled] {
+    display: none;
+}
+form.ng-invalid .btn[disabled], form.ng-valid .btn {
+    display: inline-block;
+}

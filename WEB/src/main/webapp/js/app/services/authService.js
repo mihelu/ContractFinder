@@ -1,28 +1,33 @@
-angular.module('authService', []).factory('Auth', function ($http, Alerts) {
-
-    var authorized;
+angular.module('authService', []).factory('Auth', function ($http, $location, $cookies, Alerts) {
 
     return {
         isAuthorized: function () {
-            return authorized;
+            return $cookies['sessionId'] && $cookies['accessToken'];
         },
         login: function (credentials) {
             $http.post("/rest/auth/login", credentials).
                 success(function (data) {
-                    console.log(data);
-                }).
-                error(function (data, error) {
-                    console.log(error);
-                    Alerts.addAlert('error',data);
+                    $location.path('home');
+                    Alerts.clearAlerts();
                 });
-            authorized = true;
         },
         logout: function () {
-            Alerts.clearAlerts();
-            authorized = false;
+            $http.get("/rest/auth/logout").
+                success(function (data) {
+                    delete $cookies['sessionId'];
+                    delete $cookies['accessToken'];
+                    $location.path('home');
+                    Alerts.clearAlerts();
+                });
         },
-        register: function (credentials) {
-
+        register: function (account, callback) {
+            var self = this;
+            $http.post("rest/account/register", account).
+                success(function (data) {
+                    Alerts.addAfterRouteChangeAlert('success', 'Konto zostało stworzone');
+                    self.login({login: account.login, password: account.password});
+                });
+            callback();
         }
     };
 

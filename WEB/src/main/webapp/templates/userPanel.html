@@ -1,24 +1,29 @@
-<div ui-if="!auth.isAuthorized()" >
+<div ui-if="!auth.isAuthorized()">
     <h3 class="text-center">Zaloguj się</h3>
 
-    <form>
+    <form ng-submit="login()" novalidate>
         <div class="control-group">
             <label>Login</label>
-            <input type="text" name="login" ng-model="credentials.login">
+            <input type="text" name="login" ng-model="credentials.login" required>
         </div>
         <div class="control-group">
-            <label>Password</label>
-            <input type="password" name="password" ng-model="credentials.password">
+            <label>Hasło</label>
+            <input type="password" name="password" ng-model="credentials.password" required>
         </div>
-
-        <button ng-click="auth.login(credentials)" class="btn btn-block btn-primary">Login</button>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-block btn-primary">Login</button>
+                <button class="btn btn-block btn-primary" disabled>Login</button>
+            </div>
+        </div>
     </form>
 
     <a href="#/register" class="btn btn-block btn-danger">Załóż konto</a>
 </div>
 
-<div ui-if="auth.isAuthorized()">
-    <button ng-click="auth.logout()" class="width100">Logout</button>
-    <button ng-click="alerts.addAlert('info','test')" class="width100">ALERT!</button>
-    <button ng-click="alerts.clearAlerts()" class="width100">CLEAR ALERTS!</button>
+<div ui-if="auth.isAuthorized()" ng-init="initAccount()">
+    <div ui-if="account().personal">{{account().user.firstName}} {{account().user.lastName}}</div>
+    <button ng-click="logout()" class="btn btn-danger btn-block">Logout</button>
+    <button ng-click="alerts.addAlert('info','test')" class="btn-block">ALERT!</button>
+    <button ng-click="alerts.clearAlerts()" class="btn-block">CLEAR ALERTS!</button>
 </div>

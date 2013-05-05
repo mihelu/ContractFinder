@@ -16,6 +16,16 @@
     </session-config>
 
     <servlet>
+        <servlet-name>Log4JInitServlet</servlet-name>
+        <servlet-class>pl.edu.pk.msala.contractfinder.web.logging.LoggerConfiguration</servlet-class>
+        <init-param>
+            <param-name>log4j-properties-location</param-name>
+            <param-value>WEB-INF/log4j.properties</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
         <servlet-name>jersey</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
@@ -26,6 +36,18 @@
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
             <param-value>true</param-value>
         </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+            <param-value>pl.edu.pk.msala.contractfinder.web.rest.filter.RequestFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>pl.edu.pk.msala.contractfinder.web.rest.filter.ResponseFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.spi.container.ResourceFilters</param-name>
+            <param-value>com.sun.jersey.api.container.filter.RolesAllowedResourceFilterFactory</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -33,10 +55,6 @@
         <servlet-name>jersey</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
-
-    <listener>
-        <listener-class>pl.edu.pk.msala.contractfinder.web.utils.WebAppConfiguration</listener-class>
-    </listener>
 
     <context-param>
         <param-name>naming.url</param-name>

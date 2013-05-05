@@ -2,6 +2,7 @@
 <html ng-app="ContractFinder" ng-controller="AppCtrl">
 <head>
     <title>ContractFinder</title>
+    <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
@@ -12,8 +13,10 @@
     <script src="js/angular/angular.min.js"></script>
     <script src="js/angular/ui-bootstrap-tpls-0.2.0.min.js"></script>
     <script src="js/angular/angular-ui.min.js"></script>
+    <script src="js/angular/angular-cookies.min.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/controllers/appController.js"></script>
+    <script src="js/app/controllers/userPanelController.js"></script>
     <script src="js/app/controllers/homeController.js"></script>
     <script src="js/app/controllers/createContractController.js"></script>
     <script src="js/app/controllers/browseContractsController.js"></script>
@@ -28,8 +31,9 @@
         <div class="navbar-inner">
             <a class="brand" href="#/home">ContractFinder</a>
             <ul class="nav">
-                <li ui-if="auth.isAuthorized()" ng-class="{active: navClass('create')}"><a href="#/create">Create</a></li>
-                <li ng-class="{active: navClass('browse')}"><a href="#/browse">Browse</a></li>
+                <li ui-if="auth.isAuthorized()" ng-class="{active: navClass('create')}"><a href="#/create">Utwórz</a>
+                </li>
+                <li ui-if="auth.isAuthorized()" ng-class="{active: navClass('browse')}"><a href="#/browse">Przeglądaj</a></li>
             </ul>
         </div>
     </div>
@@ -37,13 +41,15 @@
     <div class="row">
         <div class="span9">
 
-            <alert ng-repeat="alert in alerts.getAlerts()" type="alert.type" close="alerts.closeAlert($index)">{{alert.msg}}</alert>
+            <alert ng-repeat="alert in alerts.getAlerts()" type="alert.type" close="alerts.closeAlert($index)">
+                {{alert.msg}}
+            </alert>
 
             <div ng-view></div>
 
         </div>
         <div class="span3">
-            <div ng-include="'templates/userPanel.html'"></div>
+            <div ng-include="'templates/userPanel.html'" ng-controller="UserPanelCtrl"></div>
         </div>
     </div>
 

@@ -1,5 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +12,7 @@ import java.io.Serializable;
  * Time: 22:23
  */
 @Entity
-@Table(name = "CF_USERS")
+@Table(name = "CF_USER")
 public class User implements Serializable{
 
     @Id
@@ -50,5 +52,14 @@ public class User implements Serializable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(User.class).
+                addValue(id).
+                addValue(firstName).
+                addValue(lastName).
+                toString();
     }
 }

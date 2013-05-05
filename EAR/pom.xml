@@ -27,16 +27,10 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jboss-maven-plugin</artifactId>
-                <version>1.5.0</version>
-                <configuration>
-                    <hostName>${appserver.host}</hostName>
-                    <port>${appserver.port}</port>
-                    <fileNames>
-                        <fileName>${ear.path}</fileName>
-                    </fileNames>
-                </configuration>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.4.Final</version>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

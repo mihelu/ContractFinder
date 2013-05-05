@@ -1,8 +1,11 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,11 +14,11 @@ import java.util.Date;
  * Time: 19:46
  */
 @Entity
-@Table(name = "CF_ACCOUNTS")
-public class Account implements Serializable{
+@Table(name = "CF_ACCOUNT")
+public class Account implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "pk_seq", sequenceName = "acc_id_seq", initialValue = 1,allocationSize = 1)
+    @SequenceGenerator(name = "pk_seq", sequenceName = "acc_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_seq")
     @Column(name = "ACC_ID")
     private Long id;
@@ -26,7 +29,7 @@ public class Account implements Serializable{
     @Column(name = "ACC_PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "ACC_CREATE_DATE", nullable = false)
+    @Column(name = "ACC_CREATE_DATE", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createDate;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -39,6 +42,15 @@ public class Account implements Serializable{
 
     @Column(name = "ACC_PERSONAL", nullable = false)
     private Boolean personal;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinTable(name = "CF_ACCOUNT_ROLES",
+            joinColumns = {
+                    @JoinColumn(name = "ARO_ACC_ID", nullable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ARO_ROL_ID", nullable = false)
+            })
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -94,5 +106,26 @@ public class Account implements Serializable{
 
     public void setPersonal(Boolean personal) {
         this.personal = personal;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(Account.class).
+                addValue(id).
+                addValue(login).
+                addValue(createDate).
+                addValue(personal).
+                addValue(company).
+                addValue(user).
+                addValue(roles).
+                toString();
     }
 }

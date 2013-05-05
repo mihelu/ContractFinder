@@ -3,8 +3,10 @@ package pl.edu.pk.msala.contractfinder.ejb.facade;
 import pl.edu.pk.msala.contractfinder.ejb.dto.AccountData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 
 import javax.ejb.Remote;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,4 +18,8 @@ import javax.ejb.Remote;
 public interface AccountFacadeRemote {
 
     public Account getAccount(AccountData accountData) throws AppException;
+
+    public Account getAccount(Long id);
+
+    public void createAccount(Account account) throws AppRollbackException;
 }
