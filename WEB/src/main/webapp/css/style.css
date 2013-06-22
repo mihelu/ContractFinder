@@ -1,3 +1,13 @@
+.container {
+    width: 1200px;
+}
+
+#loadingIndicator {
+    background: url('/img/loading_dots.gif') no-repeat center;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
 .width100 {
     width: 100%;
 }

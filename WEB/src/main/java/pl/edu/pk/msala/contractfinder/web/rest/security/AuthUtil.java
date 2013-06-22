@@ -16,7 +16,7 @@ public class AuthUtil {
 
     public static final String SESSIONID = "sessionId";
     public static final String ACCESSTOKEN = "accessToken";
-    public static final int TOKEN_EXPIRE = 900; //sec
+    public static final int TOKEN_EXPIRE = 120; //sec
 
     public static NewCookie createCookie(String name, String value) {
         return createCookie(name, value, TOKEN_EXPIRE);

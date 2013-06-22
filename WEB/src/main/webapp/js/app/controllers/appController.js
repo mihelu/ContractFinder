@@ -1,9 +1,14 @@
 function AppCtrl($scope, $location, Auth, Alerts, $rootScope, $cookies) {
 
+    var loading = false;
     //alerts
     $scope.alerts = Alerts;
     //authorization
     $scope.auth = Auth;
+
+    $scope.loadingIndicator = function () {
+        return loading;
+    }
 
     $scope.navClass = function (page) {
         var currentRoute = $location.path().substring(1) || 'home';
@@ -23,6 +28,20 @@ function AppCtrl($scope, $location, Auth, Alerts, $rootScope, $cookies) {
         function () {
             Alerts.addAfterRouteChangeAlert('warn', 'Wymagane zalogowanie!');
             Auth.logout();
+        }
+    );
+
+    $rootScope.$on(
+        "event:ajaxStart",
+        function () {
+            loading = true;
+        }
+    );
+
+    $rootScope.$on(
+        "event:ajaxEnd",
+        function () {
+            loading = false;
         }
     );
 

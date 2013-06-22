@@ -15,6 +15,10 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
+    <listener>
+        <listener-class>pl.edu.pk.msala.contractfinder.web.session.WebSessionCleaner</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>Log4JInitServlet</servlet-name>
         <servlet-class>pl.edu.pk.msala.contractfinder.web.logging.LoggerConfiguration</servlet-class>

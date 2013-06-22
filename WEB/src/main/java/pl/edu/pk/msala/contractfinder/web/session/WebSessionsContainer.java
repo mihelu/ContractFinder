@@ -29,4 +29,8 @@ public class WebSessionsContainer {
     public static void removeWebSession(String sessionId) {
         sessionMap.remove(sessionId);
     }
+
+    public static Map<String, WebSession> getSessionMap() {
+        return sessionMap;
+    }
 }

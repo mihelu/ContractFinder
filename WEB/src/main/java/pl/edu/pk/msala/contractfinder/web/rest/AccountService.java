@@ -49,6 +49,11 @@ public class AccountService {
     @GET
     @Path("/test")
     public Response test() {
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return Response.ok().build();
     }
 }

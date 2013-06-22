@@ -1,5 +1,6 @@
 package pl.edu.pk.msala.contractfinder.web.session;
 
+import org.joda.time.DateTime;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Role;
 
 import java.io.Serializable;
@@ -16,12 +17,14 @@ public class WebSession implements Serializable {
     private Long accountId;
     private String sessionId;
     private String accessToken;
+    private DateTime createDate;
     private Set<Role> roles;
 
     public WebSession(Long accountId, String sessionId, String accessToken, Set<Role> roles) {
         this.accountId = accountId;
         this.sessionId = sessionId;
         this.accessToken = accessToken;
+        this.createDate = new DateTime();
         this.roles = roles;
     }
 
@@ -43,6 +46,14 @@ public class WebSession implements Serializable {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public DateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(DateTime createDate) {
+        this.createDate = createDate;
     }
 
     public Set<Role> getRoles() {

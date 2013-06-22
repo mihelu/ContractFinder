@@ -45,20 +45,22 @@ ContractFinder.config(
                 redirectTo: "/home"
             }
         ),
-            $httpProvider.responseInterceptors.push(function ($q, $location, Alerts,$rootScope) {
+            $httpProvider.responseInterceptors.push(function ($q, $location, Alerts, $rootScope) {
                 return function (promise) {
-                    var handleForbidden = function(response) {
-                            $location.path('forbidden');
-                            return $q.reject(response);
+                    var handleForbidden = function (response) {
+                        $location.path('forbidden');
+                        return $q.reject(response);
                     }
 
                     return promise.then(function (response) {
+                        $rootScope.$broadcast("event:ajaxEnd");
                         return response;
                     }, function (response) {
-                        if(response.status === 403) {
+                        $rootScope.$broadcast("event:ajaxEnd");
+                        if (response.status === 403) {
                             return handleForbidden(response);
                         }
-                        if(response.status === 401) {
+                        if (response.status === 401) {
                             $rootScope.$broadcast("event:unauthorized");
                             return $q.reject(response);
                         }
@@ -66,6 +68,13 @@ ContractFinder.config(
                         return $q.reject(response);
                     });
                 }
+            }),
+            $httpProvider.defaults.transformRequest.push(function (data, headersGetter) {
+                var $injector, $rootScope;
+                $injector = angular.element('#app').injector();
+                $rootScope = $injector.get('$rootScope');
+                $rootScope.$broadcast("event:ajaxStart");
+                return data;
             });
     }
 );
