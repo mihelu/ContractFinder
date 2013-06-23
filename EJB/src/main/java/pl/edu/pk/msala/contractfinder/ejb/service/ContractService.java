@@ -1,5 +1,6 @@
 package pl.edu.pk.msala.contractfinder.ejb.service;
 
+import org.hibernate.Hibernate;
 import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.manager.ContractManager;
@@ -28,6 +29,13 @@ public class ContractService {
         contract.setAccount(accountService.getAccount(contract.getAccount().getId()));
         contract.setPublishDate(new Date());
         return contractManager.createContract(contract);
+    }
+
+    public Contract getContract(Long id) {
+        Contract contract = contractManager.getContract(id);
+        Hibernate.initialize(contract.getAccount());
+        Hibernate.initialize(contract.getCategories());
+        return contract;
     }
 
     public List<Contract> findContracts(ContractFindData findData) {

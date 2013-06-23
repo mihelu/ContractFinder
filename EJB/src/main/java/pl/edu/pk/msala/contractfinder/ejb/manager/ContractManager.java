@@ -28,4 +28,8 @@ public class ContractManager {
         entityManager.flush();
         return contract.getId();
     }
+
+    public Contract getContract(Long id) {
+        return entityManager.find(Contract.class, id);
+    }
 }

@@ -12,13 +12,10 @@ angular.module('authService', []).factory('Auth', function ($http, $location, $c
                 });
         },
         logout: function () {
-            $http.get("/rest/auth/logout").
-                success(function (data) {
                     delete $cookies['sessionId'];
                     delete $cookies['accessToken'];
                     $location.path('home');
                     Alerts.clearAlerts();
-                });
         },
         register: function (account, callback) {
             var self = this;

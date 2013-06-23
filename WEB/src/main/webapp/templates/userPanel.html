@@ -24,6 +24,4 @@
 <div ui-if="auth.isAuthorized()" ng-init="initAccount()">
     <div ui-if="account().personal">{{account().user.firstName}} {{account().user.lastName}}</div>
     <button ng-click="logout()" class="btn btn-danger btn-block">Logout</button>
-    <button ng-click="alerts.addAlert('info','test')" class="btn-block">ALERT!</button>
-    <button ng-click="alerts.clearAlerts()" class="btn-block">CLEAR ALERTS!</button>
 </div>

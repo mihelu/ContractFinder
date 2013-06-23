@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import com.google.common.base.Objects;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,9 +24,11 @@ public class Account implements Serializable {
     @Column(name = "ACC_ID")
     private Long id;
 
+    @JsonIgnore
     @Column(name = "ACC_LOGIN", unique = true, nullable = false)
     private String login;
 
+    @JsonIgnore
     @Column(name = "ACC_PASSWORD", nullable = false)
     private String password;
 

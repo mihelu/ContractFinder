@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 import pl.edu.pk.msala.contractfinder.ejb.facade.ContractFacadeRemote;
 import pl.edu.pk.msala.contractfinder.web.locator.FacadeLocator;
@@ -49,5 +50,15 @@ public class ContractService {
         }
         Long id = contractFacadeRemote.createContract(contract);
         return Response.ok(id).build();
+    }
+
+    @POST
+    @Path("/details")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getContract(Long id) throws AppException {
+        Contract contract = contractFacadeRemote.getContract(id);
+        contract.getAccount().setRoles(null);
+        return Response.ok(contract).build();
     }
 }

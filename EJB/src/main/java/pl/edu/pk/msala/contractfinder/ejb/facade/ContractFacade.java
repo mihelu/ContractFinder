@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 import pl.edu.pk.msala.contractfinder.ejb.service.ContractService;
 
@@ -22,5 +23,10 @@ public class ContractFacade implements ContractFacadeRemote {
     @Override
     public Long createContract(Contract contract) throws AppRollbackException {
         return contractService.createContract(contract);
+    }
+
+    @Override
+    public Contract getContract(Long id) throws AppException {
+        return contractService.getContract(id);
     }
 }

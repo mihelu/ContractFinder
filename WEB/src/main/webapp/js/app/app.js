@@ -10,6 +10,12 @@ ContractFinder.config(
     function ($routeProvider, $httpProvider) {
         $routeProvider
             .when(
+            "/",
+            {
+                redirectTo: '/home'
+            }
+        )
+            .when(
             "/home",
             {
                 templateUrl: '/templates/home.html',
@@ -29,12 +35,12 @@ ContractFinder.config(
                 controller: BrowseContractsCtrl
             }
         ).when(
-                "/details/:id",
+            "/details/:id",
             {
                 templateUrl: '/templates/details.html',
                 controller: DetailsContractCtrl
             }
-            ).when(
+        ).when(
             "/register",
             {
                 templateUrl: '/templates/register.html',
@@ -45,10 +51,15 @@ ContractFinder.config(
             {
                 templateUrl: '/templates/forbidden.html'
             }
+        ).when(
+            "/noPage",
+            {
+                templateUrl: '/templates/noPage.html'
+            }
         )
             .otherwise(
             {
-                redirectTo: "/home"
+                redirectTo: "/noPage"
             }
         ),
             $httpProvider.responseInterceptors.push(function ($q, $location, Alerts, $rootScope) {
