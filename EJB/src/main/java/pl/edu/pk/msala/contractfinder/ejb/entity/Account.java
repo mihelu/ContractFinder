@@ -43,7 +43,7 @@ public class Account implements Serializable {
     @Column(name = "ACC_PERSONAL", nullable = false)
     private Boolean personal;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "CF_ACCOUNT_ROLES",
             joinColumns = {
                     @JoinColumn(name = "ARO_ACC_ID", nullable = false)},
@@ -51,6 +51,9 @@ public class Account implements Serializable {
                     @JoinColumn(name = "ARO_ROL_ID", nullable = false)
             })
     private Set<Role> roles;
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+//    private Set<Contract> contracts;
 
     public Long getId() {
         return id;
@@ -115,6 +118,14 @@ public class Account implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+//    public Set<Contract> getContracts() {
+//        return contracts;
+//    }
+//
+//    public void setContracts(Set<Contract> contracts) {
+//        this.contracts = contracts;
+//    }
 
     @Override
     public String toString() {

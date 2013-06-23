@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.service;
 
 import com.google.common.collect.Sets;
+import org.hibernate.Hibernate;
 import pl.edu.pk.msala.contractfinder.ejb.constant.Roles;
 import pl.edu.pk.msala.contractfinder.ejb.dto.AccountData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
@@ -9,9 +10,7 @@ import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 import pl.edu.pk.msala.contractfinder.ejb.manager.AccountManager;
 
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import java.util.Date;
 
 /**
@@ -22,6 +21,7 @@ import java.util.Date;
  */
 @Stateless
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class AccountService {
 
     @EJB
@@ -40,7 +40,13 @@ public class AccountService {
 
     public Account getAccount(AccountData accountData) throws AppException {
         Account account = accountManager.getAccount(accountData);
-        account.getRoles();
+        //account.getRoles();
+        return account;
+    }
+
+    public Account getAccount(Long id) {
+        Account account = accountManager.getAccount(id);
+        Hibernate.initialize(account.getRoles());
         return account;
     }
 }

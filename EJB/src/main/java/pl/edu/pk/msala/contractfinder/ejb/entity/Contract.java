@@ -4,6 +4,7 @@ import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,13 @@ public class Contract implements Serializable {
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "CON_DESCRIPTION", unique = false)
     private String description;
+
+    @Column(name = "CON_PUBLISH_DATE", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date publishDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CON_ACC_ID", nullable = false)
+    private Account account;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "CF_CONTRACT_CATEGORY",
@@ -63,6 +71,22 @@ public class Contract implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public List<Category> getCategories() {

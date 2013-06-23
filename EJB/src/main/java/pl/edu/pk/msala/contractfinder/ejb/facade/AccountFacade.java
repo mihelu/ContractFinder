@@ -31,7 +31,7 @@ public class AccountFacade implements AccountFacadeRemote {
 
     @Override
     public Account getAccount(Long id) {
-        return accountManager.getAccount(id);
+        return accountService.getAccount(id);
     }
 
     @Override

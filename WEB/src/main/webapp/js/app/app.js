@@ -29,6 +29,12 @@ ContractFinder.config(
                 controller: BrowseContractsCtrl
             }
         ).when(
+                "/details/:id",
+            {
+                templateUrl: '/templates/details.html',
+                controller: DetailsContractCtrl
+            }
+            ).when(
             "/register",
             {
                 templateUrl: '/templates/register.html',

@@ -1,8 +1,9 @@
 package pl.edu.pk.msala.contractfinder.ejb.utils;
 
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,13 +17,13 @@ public class QueryUtil {
 
     }
 
-    public static <T> T getSingleResult(Criteria criteria) throws AppException {
-        return getSingleResult(criteria, null);
+    public static <T> T getSingleResult(TypedQuery<T> query) throws AppException {
+        return getSingleResult(query, null);
     }
 
-    public static <T> T getSingleResult(Criteria criteria, String message) throws AppException {
+    public static <T> T getSingleResult(TypedQuery<T> query, String message) throws AppException {
         try {
-            T result = (T) criteria.uniqueResult();
+            T result = query.getSingleResult();
             if (result == null) {
                 if (message == null && message.equals("")) {
                     throw new AppException();
@@ -31,7 +32,7 @@ public class QueryUtil {
                 }
             }
             return result;
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             if (message == null || message.equals("")) {
                 throw new AppException(e);
             } else {

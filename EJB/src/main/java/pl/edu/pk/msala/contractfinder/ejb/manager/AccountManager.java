@@ -1,21 +1,24 @@
 package pl.edu.pk.msala.contractfinder.ejb.manager;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import pl.edu.pk.msala.contractfinder.ejb.dto.AccountData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
+import pl.edu.pk.msala.contractfinder.ejb.entity.Account_;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Role;
+import pl.edu.pk.msala.contractfinder.ejb.entity.Role_;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.utils.QueryUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +28,7 @@ import java.util.Date;
  */
 @Stateless
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class AccountManager {
 
     private static final Logger logger = Logger.getLogger(AccountManager.class);
@@ -38,12 +42,16 @@ public class AccountManager {
     }
 
     public Account getAccount(AccountData accountData) throws AppException {
-        Session session = entityManager.unwrap(Session.class);
-        Criteria criteria = session.createCriteria(Account.class);
-        criteria.setFetchMode("roles", FetchMode.JOIN);
-        criteria.add(Restrictions.eq("login", accountData.getLogin()));
-        criteria.add(Restrictions.eq("password", accountData.getPassword()));
-        return QueryUtil.<Account>getSingleResult(criteria, "Nieprawidłowe dane"); //FIXME message?
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Account> query = builder.createQuery(Account.class);
+        Root<Account> root = query.from(Account.class);
+        Predicate restrictions = builder.and(
+                builder.equal(root.get(Account_.login), accountData.getLogin()),
+                builder.equal(root.get(Account_.password), accountData.getPassword())
+        );
+        root.fetch(Account_.roles);
+        query.where(restrictions);
+        return QueryUtil.<Account>getSingleResult(entityManager.createQuery(query), "Nieprawidłowe dane");
     }
 
     public Account getAccount(Long id) {
@@ -51,9 +59,10 @@ public class AccountManager {
     }
 
     public Role getRole(String name) throws AppException {
-        Session session = entityManager.unwrap(Session.class);
-        Criteria criteria = session.createCriteria(Role.class);
-        criteria.add(Restrictions.eq("name", name));
-        return QueryUtil.<Role>getSingleResult(criteria, "GET_ROLE_FAILED"); //FIXME message?
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Role> query = builder.createQuery(Role.class);
+        Root<Role> root = query.from(Role.class);
+        query.where(builder.equal(root.get(Role_.name), name));
+        return QueryUtil.<Role>getSingleResult(entityManager.createQuery(query), "GET_ROLE_FAILED");
     }
 }

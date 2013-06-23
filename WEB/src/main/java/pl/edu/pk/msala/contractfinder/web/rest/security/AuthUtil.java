@@ -26,6 +26,17 @@ public class AuthUtil {
         return new NewCookie(name, value, "/", "", "", expire, false);
     }
 
+    public static String getSessionId(javax.servlet.http.Cookie[] cookies) {
+        String result = "";
+        for(int i=0;i<cookies.length;i++) {
+            if(cookies[i].getName().equals(SESSIONID)) {
+                result = cookies[i].getValue();
+                break;
+            }
+        }
+        return result;
+    }
+
     public static String generateToken(String login, String password) {
         try {
             String tokenString = login + password + System.currentTimeMillis();

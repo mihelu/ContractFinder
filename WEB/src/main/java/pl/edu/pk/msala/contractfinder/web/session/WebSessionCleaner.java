@@ -38,12 +38,11 @@ public class WebSessionCleaner implements ServletContextListener {
 
         @Override
         protected void runOneIteration() throws Exception {
-            logger.info("RUN_ONE_ITERATION");
             for(Iterator<Map.Entry<String,WebSession>> it = WebSessionsContainer.getSessionMap().entrySet().iterator();it.hasNext();) {
                 Map.Entry<String,WebSession> entry = it.next();
-                logger.info("Session: " + entry.getKey());
                 if(entry.getValue().getCreateDate().plusSeconds(AuthUtil.TOKEN_EXPIRE).isBeforeNow()) {
                     it.remove();
+                    logger.info("Session removed: " + entry.getKey());
                 }
             }
         }

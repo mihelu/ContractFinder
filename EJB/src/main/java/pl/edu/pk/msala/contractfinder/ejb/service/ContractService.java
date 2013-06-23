@@ -1,10 +1,12 @@
 package pl.edu.pk.msala.contractfinder.ejb.service;
 
+import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
+import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.manager.ContractManager;
 
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.ejb.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,8 +16,22 @@ import javax.ejb.Stateless;
  */
 @Stateless
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ContractService {
 
     @EJB
     private ContractManager contractManager;
+    @EJB
+    private AccountService accountService;
+
+    public Long createContract(Contract contract) {
+        contract.setAccount(accountService.getAccount(contract.getAccount().getId()));
+        contract.setPublishDate(new Date());
+        return contractManager.createContract(contract);
+    }
+
+    public List<Contract> findContracts(ContractFindData findData) {
+
+        return null;
+    }
 }
