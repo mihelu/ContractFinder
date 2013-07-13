@@ -47,14 +47,4 @@ public class AuthService {
                 build();
     }
 
-//    @GET
-//    @Path("/logout")
-//    public Response logout() {
-//        String sessionId = httpServletRequest.getSession(true).getId();
-//        if (sessionId != null) {
-//            WebSessionsContainer.removeWebSession(sessionId);
-//        }
-//        return Response.ok().build();
-//    }
-
 }

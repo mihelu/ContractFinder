@@ -1,22 +1,41 @@
-<form class="form-horizontal" ng-submit="create()" novalidate>
+<form class="form-horizontal" id="createContractForm" name="createContractForm" ng-submit="create()" novalidate>
     <legend><h3 class="text-center">Utwórz zlecenie</h3></legend>
     <div class="control-group">
         <label class="control-label" for="inputName">Nazwa</label>
 
         <div class="controls">
-            <input type="text" id="inputName" placeholder="Nazwa" ng-model="contract.name" required class="input-block-level">
+            <input type="text" id="inputName" name="inputName" placeholder="Nazwa" ng-model="contract.name" required
+                   class="input-block-level">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="inputDescription">Opis</label>
 
         <div class="controls">
-            <textarea id="inputDescription" placeholder="Opis" ng-model="contract.description" rows="6" required class="input-block-level"/>
+            <textarea id="inputDescription" name="inputDescription" placeholder="Opis" ng-model="contract.description" rows="6" required
+                      class="input-block-level"/>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputPublishStart">Start publikacji</label>
+
+        <div class="controls">
+            <input type="text" id="inputPublishStart" name="inputPublishStart" placeholder="Start publikacji" datetimepicker=""
+                   ng-model="contract.publishStart" required>
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label" for="inputPublishEnd">Koniec publikacji</label>
+
+        <div class="controls">
+            <input type="text" id="inputPublishEnd" name="inputPublishEnd" placeholder="Koniec publikacji" datetimepicker=""
+                   ng-model="contract.publishEnd" required>
+        </div>
+    </div>
     <div>
-        <button type="submit" class="btn btn-block btn-danger btn-large">Utwórz</button>
-        <button class="btn btn-block btn-danger btn-large" disabled>Utwórz</button>
+        <button type="submit" class="btn btn-block btn-danger btn-large" ng-disabled="!createContractForm.$valid">
+            Utwórz
+        </button>
     </div>
 </form>

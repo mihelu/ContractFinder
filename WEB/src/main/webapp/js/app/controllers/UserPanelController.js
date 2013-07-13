@@ -3,20 +3,21 @@ function UserPanelCtrl($scope, Auth, $http) {
     $scope.credentials = {};
     var account = {};
 
-    $scope.login = function() {
-        Auth.login($scope.credentials);
-        $scope.credentials = {};
+    $scope.login = function () {
+        Auth.login($scope.credentials, function () {
+            $scope.credentials = {};
+        });
     }
 
-    $scope.logout = function() {
+    $scope.logout = function () {
         Auth.logout();
     }
 
-    $scope.account = function() {
+    $scope.account = function () {
         return account;
     }
 
-    $scope.initAccount = function() {
+    $scope.initAccount = function () {
         $http.get("/rest/account/details").
             success(function (data) {
                 account = data;

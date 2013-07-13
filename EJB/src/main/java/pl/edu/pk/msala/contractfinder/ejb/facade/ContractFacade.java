@@ -1,5 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
+import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
+import pl.edu.pk.msala.contractfinder.ejb.dto.list.ContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
@@ -7,6 +9,7 @@ import pl.edu.pk.msala.contractfinder.ejb.service.ContractService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,5 +31,10 @@ public class ContractFacade implements ContractFacadeRemote {
     @Override
     public Contract getContract(Long id) throws AppException {
         return contractService.getContract(id);
+    }
+
+    @Override
+    public List<ContractListData> findContracts(ContractFindData findData) {
+        return contractService.findContracts(findData);
     }
 }

@@ -8,7 +8,5 @@ package pl.edu.pk.msala.contractfinder.web.constants;
  */
 public interface Constants {
 
-    String LOGIN_PATH = "/rest/auth/login";
-    String LOGOUT_PATH = "/rest/auth/logout";
-    String REGISTER_PATH = "/rest/account/register";
+
 }

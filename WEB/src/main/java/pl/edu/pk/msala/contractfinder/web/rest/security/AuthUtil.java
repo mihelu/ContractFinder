@@ -1,10 +1,12 @@
 package pl.edu.pk.msala.contractfinder.web.rest.security;
 
-import javax.ws.rs.core.Cookie;
+import com.google.common.collect.Sets;
+
 import javax.ws.rs.core.NewCookie;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +19,11 @@ public class AuthUtil {
     public static final String SESSIONID = "sessionId";
     public static final String ACCESSTOKEN = "accessToken";
     public static final int TOKEN_EXPIRE = 120; //sec
+    public static final Set<String> noFilterUrls = Sets.newHashSet(
+            "/rest/auth/login",
+            "/rest/auth/logout",
+            "/rest/account/register"
+    );
 
     public static NewCookie createCookie(String name, String value) {
         return createCookie(name, value, TOKEN_EXPIRE);
@@ -28,8 +35,8 @@ public class AuthUtil {
 
     public static String getSessionId(javax.servlet.http.Cookie[] cookies) {
         String result = "";
-        for(int i=0;i<cookies.length;i++) {
-            if(cookies[i].getName().equals(SESSIONID)) {
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals(SESSIONID)) {
                 result = cookies[i].getValue();
                 break;
             }
@@ -55,10 +62,14 @@ public class AuthUtil {
         char hexDigit[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                 '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         StringBuffer buf = new StringBuffer();
-        for (int j=0; j<b.length; j++) {
+        for (int j = 0; j < b.length; j++) {
             buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
             buf.append(hexDigit[b[j] & 0x0f]);
         }
         return buf.toString();
+    }
+
+    public static boolean shouldFilterUrl(String url) {
+        return !noFilterUrls.contains(url);
     }
 }

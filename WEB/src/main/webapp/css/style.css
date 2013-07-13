@@ -3,18 +3,41 @@
 }
 
 #loadingIndicator {
-    background: url('/img/loading_dots.gif') no-repeat center;
-    height: 30px;
-    margin-bottom: 15px;
+    background: url('/img/loading.gif') no-repeat center;
+    height: 40px;
+    width: 40px;
 }
 
 .width100 {
     width: 100%;
 }
 
-form .btn, form.ng-valid .btn[disabled] {
-    display: none;
+input.ng-pristine.ng-invalid {
+    border: solid 2px red;
+    background: url('/img/invalid.png') no-repeat right;
 }
-form.ng-invalid .btn[disabled], form.ng-valid .btn {
-    display: inline-block;
+
+input.ng-dirty.ng-invalid {
+    border: solid 2px red;
+    background: url('/img/invalid.png') no-repeat right;
+}
+
+input.ng-dirty.ng-valid {
+    border: solid 2px green;
+    background: url('/img/valid.png') no-repeat right;
+}
+
+textarea.ng-pristine.ng-invalid {
+    border: solid 2px red;
+    background: url('/img/invalid.png') no-repeat right;
+}
+
+textarea.ng-dirty.ng-invalid {
+    border: solid 2px red;
+    background: url('/img/invalid.png') no-repeat right;
+}
+
+textarea.ng-dirty.ng-valid {
+    border: solid 2px green;
+    background: url('/img/valid.png') no-repeat right;
 }

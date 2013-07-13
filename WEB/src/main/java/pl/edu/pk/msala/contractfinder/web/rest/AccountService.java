@@ -2,11 +2,9 @@ package pl.edu.pk.msala.contractfinder.web.rest;
 
 import org.apache.log4j.Logger;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
-import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 import pl.edu.pk.msala.contractfinder.ejb.facade.AccountFacadeRemote;
 import pl.edu.pk.msala.contractfinder.web.locator.FacadeLocator;
-import pl.edu.pk.msala.contractfinder.web.session.WebSession;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionsContainer;
 
 import javax.ws.rs.*;
@@ -40,20 +38,13 @@ public class AccountService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccount(@CookieParam(value = "sessionId") String sessionId) {
         Account account = null;
-        if(WebSessionsContainer.isWebSession(sessionId)) {
-              account = accountFacadeRemote.getAccount(WebSessionsContainer.getWebSession(sessionId).getAccountId());
+        if (WebSessionsContainer.isWebSession(sessionId)) {
+            account = accountFacadeRemote.getAccount(WebSessionsContainer.getWebSession(sessionId).getAccountId());
+            account.setLogin(null);
+            account.setPassword(null);
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         return Response.ok().entity(account).build();
-    }
-
-    @GET
-    @Path("/test")
-    public Response test() {
-        try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return Response.ok().build();
     }
 }

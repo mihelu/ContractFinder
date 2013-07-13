@@ -1,7 +1,7 @@
 <div ui-if="!auth.isAuthorized()">
     <h3 class="text-center">Zaloguj się</h3>
 
-    <form ng-submit="login()" novalidate>
+    <form ng-submit="login()" name="loginForm" novalidate>
         <div class="control-group">
             <label>Login</label>
             <input type="text" name="login" ng-model="credentials.login" required class="input-block-level">
@@ -12,8 +12,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-block btn-primary">Login</button>
-                <button class="btn btn-block btn-primary" disabled>Login</button>
+                <button type="submit" class="btn btn-block btn-primary" ng-disabled="!loginForm.$valid">Login</button>
             </div>
         </div>
     </form>

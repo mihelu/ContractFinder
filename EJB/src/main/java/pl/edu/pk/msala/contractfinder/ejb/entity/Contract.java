@@ -33,12 +33,18 @@ public class Contract implements Serializable {
     @Column(name = "CON_DESCRIPTION", unique = false)
     private String description;
 
-    @Column(name = "CON_PUBLISH_DATE", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date publishDate;
+    @Column(name = "CON_PUBLISH_START", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date publishStart;
+
+    @Column(name = "CON_PUBLISH_END", nullable = false, columnDefinition = "TIMESTAMP")
+    private Date publishEnd;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CON_ACC_ID", nullable = false)
     private Account account;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract", cascade = CascadeType.ALL)
+    private List<Offer> offers;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "CF_CONTRACT_CATEGORY",
@@ -73,12 +79,20 @@ public class Contract implements Serializable {
         this.description = description;
     }
 
-    public Date getPublishDate() {
-        return publishDate;
+    public Date getPublishStart() {
+        return publishStart;
     }
 
-    public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
+    public void setPublishStart(Date publishStart) {
+        this.publishStart = publishStart;
+    }
+
+    public Date getPublishEnd() {
+        return publishEnd;
+    }
+
+    public void setPublishEnd(Date publishEnd) {
+        this.publishEnd = publishEnd;
     }
 
     public Account getAccount() {
@@ -87,6 +101,14 @@ public class Contract implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     public List<Category> getCategories() {

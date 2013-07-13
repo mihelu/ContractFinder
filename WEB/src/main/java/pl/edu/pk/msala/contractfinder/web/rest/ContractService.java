@@ -2,6 +2,8 @@ package pl.edu.pk.msala.contractfinder.web.rest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
+import pl.edu.pk.msala.contractfinder.ejb.dto.list.ContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
@@ -12,13 +14,11 @@ import pl.edu.pk.msala.contractfinder.web.rest.security.AuthUtil;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionsContainer;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,16 +49,25 @@ public class ContractService {
             return Response.status(500).entity("BŁĄD WEWNĘTRZNY SYSTEMU!").type(MediaType.TEXT_PLAIN_TYPE).build();
         }
         Long id = contractFacadeRemote.createContract(contract);
-        return Response.ok(id).build();
+        return Response.status(Response.Status.CREATED).entity(id).build();
     }
 
-    @POST
-    @Path("/details")
+    @GET
+    @Path("/details/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getContract(Long id) throws AppException {
+    public Response getContract(@PathParam("id") Long id) throws AppException {
         Contract contract = contractFacadeRemote.getContract(id);
         contract.getAccount().setRoles(null);
         return Response.ok(contract).build();
+    }
+
+    @POST
+    @Path("/find")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findContracts(ContractFindData findData) {
+        List<ContractListData> contracts = contractFacadeRemote.findContracts(findData);
+        return Response.ok(contracts).build();
     }
 }

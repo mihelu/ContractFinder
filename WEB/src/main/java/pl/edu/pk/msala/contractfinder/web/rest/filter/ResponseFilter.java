@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 public class ResponseFilter implements ContainerResponseFilter {
     @Override
     public ContainerResponse filter(ContainerRequest containerRequest, ContainerResponse containerResponse) {
-        if (shouldFilter(containerRequest)) {
+        if (AuthUtil.shouldFilterUrl(containerRequest.getRequestUri().getPath())) {
             AuthContext securityContext = (AuthContext) containerRequest.getSecurityContext();
             if (securityContext != null) {
                 NewCookie sessionCookie = AuthUtil.createCookie(AuthUtil.SESSIONID, securityContext.getWebSession().getSessionId());
@@ -36,11 +36,5 @@ public class ResponseFilter implements ContainerResponseFilter {
             }
         }
         return containerResponse;
-    }
-
-    private boolean shouldFilter(ContainerRequest containerRequest) {
-        return !containerRequest.getRequestUri().getPath().equals(Constants.LOGIN_PATH) &&
-                !containerRequest.getRequestUri().getPath().equals(Constants.LOGOUT_PATH) &&
-                !containerRequest.getRequestUri().getPath().equals(Constants.REGISTER_PATH);
     }
 }

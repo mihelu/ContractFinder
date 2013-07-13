@@ -7,7 +7,7 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location) {
     }
 
     $scope.initContract = function () {
-        $http.post("/rest/contract/details", $routeParams.id).
+        $http.get("/rest/contract/details/" + $routeParams.id).
             success(function (data) {
                 contract = data;
             }).error(function (error) {

@@ -1,47 +1,50 @@
-
-<form class="form-horizontal" ng-submit="register()">
+<form class="form-horizontal" name="registerForm" ng-submit="register()">
     <legend><h3 class="text-center">Rejestracja</h3></legend>
     <div class="control-group">
         <label class="control-label" for="inputLogin">Login</label>
+
         <div class="controls">
-            <input type="text" id="inputLogin" placeholder="Login" ng-model="account.login">
+            <input type="text" id="inputLogin" placeholder="Login" ng-model="account.login" required>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="inputPassword">Hasło</label>
+
         <div class="controls">
-            <input type="password" id="inputPassword" placeholder="Hasło" ng-model="account.password">
+            <input type="password" id="inputPassword" placeholder="Hasło" ng-model="account.password" required>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="personalSelect">Typ konta</label>
+
         <div class="controls">
-            <select ng-model="personalKey" ng-options="item.key as item.value for item in personal" id="personalSelect"></select>
+            <select ng-model="personalKey" ng-options="item.key as item.value for item in personal"
+                    id="personalSelect"></select>
         </div>
     </div>
     <div ui-if="!personalKey" class="control-group">
         <label class="control-label" for="inputName">Nazwa</label>
+
         <div class="controls">
-            <input type="text" id="inputName" placeholder="Nazwa" ng-model="account.company.name">
+            <input type="text" id="inputName" placeholder="Nazwa" ng-model="account.company.name" required>
         </div>
     </div>
     <div ui-if="personalKey" class="control-group">
         <label class="control-label" for="inputFirstName">Imię</label>
+
         <div class="controls">
-            <input type="text" id="inputFirstName" placeholder="Imię" ng-model="account.user.firstName">
+            <input type="text" id="inputFirstName" placeholder="Imię" ng-model="account.user.firstName" required>
         </div>
     </div>
     <div ui-if="personalKey" class="control-group">
         <label class="control-label" for="inputLastName">Nazwisko</label>
+
         <div class="controls">
-            <input type="text" id="inputLastName" placeholder="Nazwisko" ng-model="account.user.lastName">
+            <input type="text" id="inputLastName" placeholder="Nazwisko" ng-model="account.user.lastName" required>
         </div>
     </div>
 
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn btn-block btn-danger btn-large">Załóż konto</button>
-            <button class="btn btn-block btn-danger btn-large" disabled>Załóż konto</button>
-        </div>
+    <div>
+        <button type="submit" class="btn btn-block btn-danger btn-large" ng-disabled="!registerForm.$valid">Załóż konto</button>
     </div>
 </form>

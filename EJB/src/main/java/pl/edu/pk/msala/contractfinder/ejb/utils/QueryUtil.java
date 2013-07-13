@@ -4,6 +4,8 @@ import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,10 +1,13 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
+import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
+import pl.edu.pk.msala.contractfinder.ejb.dto.list.ContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 
 import javax.ejb.Remote;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,4 +21,6 @@ public interface ContractFacadeRemote {
     public Long createContract(Contract contract) throws AppRollbackException;
 
     public Contract getContract(Long id) throws AppException;
+
+    public List<ContractListData> findContracts(ContractFindData findData);
 }

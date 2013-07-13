@@ -1,18 +1,22 @@
 function BrowseContractsCtrl($scope, $http, Alerts) {
 
-    $scope.test = function() {
-        $http.get("/rest/account/test").
+    var contracts = [];
+
+    $scope.findData = {};
+
+    $scope.contracts = function() {
+        return contracts;
+    };
+
+    $scope.find = function () {
+        $http.post('/rest/contract/find', $scope.findData).
             success(function (data) {
-                Alerts.info('test');
+                console.log(data);
+                contracts = data;
             });
-    }
+    };
 
-    $scope.$on(
-        "$routeChangeSuccess",
-        function () {
-
-            Alerts.addAlert('info', 'browse alert');
-
-        }
-    );
+    $scope.$on('$routeChangeSuccess', function (scope, next, current) {
+        $scope.find();
+    });
 };

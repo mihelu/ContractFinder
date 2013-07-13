@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Role;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**

@@ -4,11 +4,13 @@ angular.module('authService', []).factory('Auth', function ($http, $location, $c
         isAuthorized: function () {
             return $cookies['sessionId'] && $cookies['accessToken'];
         },
-        login: function (credentials) {
+        login: function (credentials, success) {
+            Alerts.clearAlerts();
             $http.post("/rest/auth/login", credentials).
                 success(function (data) {
                     $location.path('home');
                     Alerts.clearAlerts();
+                    success();
                 });
         },
         logout: function () {

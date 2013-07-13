@@ -6,6 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,11 +25,9 @@ public class Account implements Serializable {
     @Column(name = "ACC_ID")
     private Long id;
 
-    @JsonIgnore
     @Column(name = "ACC_LOGIN", unique = true, nullable = false)
     private String login;
 
-    @JsonIgnore
     @Column(name = "ACC_PASSWORD", nullable = false)
     private String password;
 
@@ -54,9 +53,6 @@ public class Account implements Serializable {
                     @JoinColumn(name = "ARO_ROL_ID", nullable = false)
             })
     private Set<Role> roles;
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
-//    private Set<Contract> contracts;
 
     public Long getId() {
         return id;
@@ -122,7 +118,7 @@ public class Account implements Serializable {
         this.roles = roles;
     }
 
-//    public Set<Contract> getContracts() {
+    //    public Set<Contract> getContracts() {
 //        return contracts;
 //    }
 //

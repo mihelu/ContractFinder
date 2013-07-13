@@ -1,5 +1,6 @@
 package pl.edu.pk.msala.contractfinder.ejb.service;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hibernate.Hibernate;
 import pl.edu.pk.msala.contractfinder.ejb.constant.Roles;
@@ -40,7 +41,6 @@ public class AccountService {
 
     public Account getAccount(AccountData accountData) throws AppException {
         Account account = accountManager.getAccount(accountData);
-        //account.getRoles();
         return account;
     }
 

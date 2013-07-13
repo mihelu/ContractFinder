@@ -7,13 +7,17 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     <link href="css/angular-ui.min.css" rel="stylesheet" media="screen"/>
+    <link href="css/datetimepicker.css" rel="stylesheet" media="screen"/>
     <link href="css/style.css" rel="stylesheet" media="screen"/>
     <script src="js/jquery-1.9.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/locales/bootstrap-datetimepicker.pl.js"></script>
     <script src="js/angular/angular.min.js"></script>
     <script src="js/angular/ui-bootstrap-tpls-0.2.0.min.js"></script>
     <script src="js/angular/angular-ui.min.js"></script>
     <script src="js/angular/angular-cookies.min.js"></script>
+    <script src="js/angular/ng-upload.min.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/controllers/appController.js"></script>
     <script src="js/app/controllers/userPanelController.js"></script>
@@ -24,6 +28,7 @@
     <script src="js/app/controllers/registerAccountController.js"></script>
     <script src="js/app/services/authService.js"></script>
     <script src="js/app/services/alertsService.js"></script>
+    <script src="js/app/directives/datetimepicker.js"></script>
 </head>
 <body>
 
@@ -38,11 +43,8 @@
                 <li ui-if="auth.isAuthorized()" ng-class="{active: navClass('browse')}"><a
                         href="#/browse">Przeglądaj</a></li>
             </ul>
+            <div id="loadingIndicator" class="pull-right loading" ui-if="loadingIndicator()"></div>
         </div>
-    </div>
-
-    <div class="row-fluid">
-        <div id="loadingIndicator" ui-if="loadingIndicator()" class="span12"></div>
     </div>
 
     <div class="row-fluid">

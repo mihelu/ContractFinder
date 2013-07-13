@@ -5,10 +5,13 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
 import org.apache.log4j.Logger;
 import pl.edu.pk.msala.contractfinder.web.constants.Constants;
 import pl.edu.pk.msala.contractfinder.web.rest.security.AuthContext;
+import pl.edu.pk.msala.contractfinder.web.rest.security.AuthUtil;
 import pl.edu.pk.msala.contractfinder.web.session.WebSession;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionsContainer;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +25,7 @@ public class RequestFilter implements ContainerRequestFilter {
 
     @Override
     public ContainerRequest filter(ContainerRequest containerRequest) {
-        if (shouldFilter(containerRequest)) {
+        if (AuthUtil.shouldFilterUrl(containerRequest.getRequestUri().getPath())) {
             Cookie sessionCookie = containerRequest.getCookies().get("sessionId");
             Cookie accessTokenCookie = containerRequest.getCookies().get("accessToken");
 
@@ -33,9 +36,11 @@ public class RequestFilter implements ContainerRequestFilter {
                 } else {
                     WebSessionsContainer.removeWebSession(sessionCookie.getValue());
                     containerRequest.setSecurityContext(null);
+                    throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED).build());
                 }
             } else {
                 containerRequest.setSecurityContext(null);
+                throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED).build());
             }
         }
         return containerRequest;
@@ -43,12 +48,6 @@ public class RequestFilter implements ContainerRequestFilter {
 
     private boolean isWebSession(Cookie session, Cookie accessToken) {
         return session != null && accessToken != null && WebSessionsContainer.isWebSession(session.getValue());
-    }
-
-    private boolean shouldFilter(ContainerRequest containerRequest) {
-        return !containerRequest.getRequestUri().getPath().equals(Constants.LOGIN_PATH) &&
-                !containerRequest.getRequestUri().getPath().equals(Constants.LOGOUT_PATH) &&
-                !containerRequest.getRequestUri().getPath().equals(Constants.REGISTER_PATH);
     }
 }
 
