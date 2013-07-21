@@ -42,9 +42,14 @@ public class AuthService {
         WebSessionsContainer.putWebSession(new WebSession(account.getId(), sessionId, accessToken, account.getRoles()));
         logger.info("LOGGED IN: " + account);
         return Response.ok().
-                cookie(AuthUtil.createCookie(AuthUtil.SESSIONID, sessionId)).
-                cookie(AuthUtil.createCookie(AuthUtil.ACCESSTOKEN, accessToken)).
+                cookie(AuthUtil.createCookie(AuthUtil.SESSION_ID, sessionId)).
+                cookie(AuthUtil.createCookie(AuthUtil.ACCESS_TOKEN, accessToken)).
                 build();
     }
 
+    @GET
+    @Path("/ping")
+    public Response ping() {
+       return Response.ok().build();
+    }
 }

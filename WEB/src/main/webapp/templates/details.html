@@ -1,5 +1,19 @@
 <div ng-init="initContract()">
-    ID Zlecenia: {{contract().id}}<br/>
-    Nazwa: {{contract().name}}<br/>
-    Opis: {{contract().description}}<br/>
+    <div class="row-fluid">
+        <div class="span3 details-publisher">Wystawiajacy</div>
+        <div class="span6 details-name">Nazwa: {{contract().name}}</div>
+        <div class="span3 details-myoffer">Moja oferta</div>
+    </div>
+    <div class="row-fluid">
+        Opis: {{contract().description}}
+    </div>
+
+    <h3>Oferty</h3>
+
+    <div class="span12 details-nooffer" ui-if="contract().offers.length <= 0">Brak ofert</div>
+    <div ng-repeat="offer in contract().offers" class="row-fluid findListRow">
+        <div class="span6 offer-comment">{{offer.comment}}</div>
+        <div class="span3 offer-days">{{offer.days}}</div>
+        <div class="span3 offer-price">{{offer.offerPrice}}</div>
+    </div>
 </div>

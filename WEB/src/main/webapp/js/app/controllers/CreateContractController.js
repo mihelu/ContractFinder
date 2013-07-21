@@ -1,4 +1,4 @@
-function CreateContractCtrl($scope, $http, $location, Alerts) {
+function CreateContractCtrl($scope, $http, $location, Alerts, $rootScope) {
 
     $scope.contract = {};
 
@@ -9,6 +9,7 @@ function CreateContractCtrl($scope, $http, $location, Alerts) {
                 console.log(data);
                 Alerts.addAfterRouteChangeAlert('success', 'Zlecenie zostało stworzone');
                 $location.path('details/' + data);
+                $rootScope.$broadcast("event:contractAdded");
             });
     };
 

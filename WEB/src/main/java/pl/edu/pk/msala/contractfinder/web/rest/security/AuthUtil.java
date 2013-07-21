@@ -16,9 +16,9 @@ import java.util.Set;
  */
 public class AuthUtil {
 
-    public static final String SESSIONID = "sessionId";
-    public static final String ACCESSTOKEN = "accessToken";
-    public static final int TOKEN_EXPIRE = 120; //sec
+    public static final String SESSION_ID = "sessionId";
+    public static final String ACCESS_TOKEN = "accessToken";
+    public static final int TOKEN_EXPIRE = 900; //sec
     public static final Set<String> noFilterUrls = Sets.newHashSet(
             "/rest/auth/login",
             "/rest/auth/logout",
@@ -36,7 +36,7 @@ public class AuthUtil {
     public static String getSessionId(javax.servlet.http.Cookie[] cookies) {
         String result = "";
         for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals(SESSIONID)) {
+            if (cookies[i].getName().equals(SESSION_ID)) {
                 result = cookies[i].getValue();
                 break;
             }

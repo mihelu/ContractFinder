@@ -1,4 +1,4 @@
-function AppCtrl($scope, $location, Auth, Alerts, $rootScope, $cookies) {
+function AppCtrl($scope, $location, Auth, Alerts, $rootScope, $http) {
 
     var loading = false;
     //alerts

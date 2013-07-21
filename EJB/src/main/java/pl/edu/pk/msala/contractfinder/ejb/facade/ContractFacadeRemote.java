@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
 import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
+import pl.edu.pk.msala.contractfinder.ejb.dto.list.AccountContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.dto.list.ContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
@@ -23,4 +24,6 @@ public interface ContractFacadeRemote {
     public Contract getContract(Long id) throws AppException;
 
     public List<ContractListData> findContracts(ContractFindData findData);
+
+    public List<AccountContractListData> findAccountContracts(Long id);
 }

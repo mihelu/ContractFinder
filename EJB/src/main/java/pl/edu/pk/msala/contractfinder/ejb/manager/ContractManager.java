@@ -43,12 +43,12 @@ public class ContractManager {
         return entityManager.find(Contract.class, id);
     }
 
-    public List<ContractListData> findContracts(ContractFindData findData) {
+    public List<Contract> findContracts(ContractFindData findData) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<ContractListData> query = builder.createQuery(ContractListData.class);
+        CriteriaQuery<Contract> query = builder.createQuery(Contract.class);
         Root<Contract> root = query.from(Contract.class);
         query.select(
-                builder.construct(ContractListData.class, root.get(Contract_.id), root.get(Contract_.name), root.get(Contract_.publishStart))
+                builder.construct(Contract.class, root.get(Contract_.id), root.get(Contract_.name), root.get(Contract_.publishStart), root.get(Contract_.publishEnd))
         );
         List<Predicate> predicates = Lists.newArrayList();
         Predicate predicateOr = builder.or(
@@ -59,5 +59,9 @@ public class ContractManager {
         Predicate predicate = builder.and(predicates.toArray(new Predicate[predicates.size()]));
         query.where(predicate);
         return entityManager.createQuery(query).getResultList();
+    }
+
+    public List<Contract> findAccountContracts(Long id) {
+        return entityManager.createNamedQuery(Contract.CON_FIND_ACCOUNT_CONTRACTS).setParameter(1, id).getResultList();
     }
 }

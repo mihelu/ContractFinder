@@ -1,8 +1,16 @@
 <button ng-click="find()" class="btn btn-danger btn-block">Szukaj</button>
-<br />
+<br/>
+<div class="row-fluid">
+    <div class="span6">Nazwa</div>
+    <div class="span3">Data wystawienia</div>
+    <div class="span3">Do końca</div>
+</div>
+
 <div ng-repeat="contract in contracts()" class="row-fluid findListRow">
-    <div class="span1"><a href="#/details/{{contract.id}}"><i class="icon-search"/></a></div>
-    <div class="span2">Konto</div>
-    <div class="span6">{{contract.name}}</div>
-    <div class="span3">{{contract.publishStart | date:'dd-MM-yyyy HH:mm:ss'}}</div>
+    <a href="#/details/{{contract.id}}">
+        <div class="span2 browse-publisher">Publisher</div>
+        <div class="span4 browse-name">{{contract.name}}</div>
+        <div class="span3 browse-publish-date">{{contract.publishStart | date:'dd-MM-yyyy HH:mm:ss'}}</div>
+        <div class="span3 browse-time-left" timeleft="" ng-model="contract"></div>
+    </a>
 </div>

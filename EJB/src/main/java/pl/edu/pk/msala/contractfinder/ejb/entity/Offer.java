@@ -1,8 +1,10 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,8 +14,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "CF_OFFER")
-public class Offer {
+@NamedQueries({
+        @NamedQuery(name = Offer.OFF_FIND_CONTRACT_OFFERS, query = "SELECT off FROM Offer off LEFT JOIN off.contract c WHERE c.id = ?1"),
+        @NamedQuery(name = Offer.OFF_FIND_ACCOUNT_OFFERS, query = "SELECT off FROM Offer off LEFT JOIN off.account a WHERE a.id = ?1")
+})
+public class Offer implements Serializable{
 
+    public static final String OFF_FIND_CONTRACT_OFFERS = "offFindContractOffers";
+    public static final String OFF_FIND_ACCOUNT_OFFERS = "offFindAccountOffers";
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "off_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_seq")
@@ -33,9 +41,14 @@ public class Offer {
     @JoinColumn(name = "OFF_CON_ID", nullable = false)
     private Contract contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "OFF_ACC_ID", nullable = false)
     private Account account;
+
+    @PostLoad
+    public void init() {
+
+    }
 
     public Long getId() {
         return id;
@@ -75,5 +88,13 @@ public class Offer {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

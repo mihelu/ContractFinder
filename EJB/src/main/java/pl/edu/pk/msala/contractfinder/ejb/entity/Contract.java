@@ -1,5 +1,6 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
+import org.hibernate.Hibernate;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -16,8 +17,12 @@ import java.util.List;
 @Indexed
 @Entity
 @Table(name = "CF_CONTRACT")
+@NamedQueries({
+        @NamedQuery(name = Contract.CON_FIND_ACCOUNT_CONTRACTS, query = "SELECT c FROM Contract c LEFT JOIN c.account a WHERE a.id = ?1")
+})
 public class Contract implements Serializable {
 
+    public static final String CON_FIND_ACCOUNT_CONTRACTS = "conFindAccountContracts";
     @DocumentId
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "con_id_seq", initialValue = 1, allocationSize = 1)
@@ -39,7 +44,7 @@ public class Contract implements Serializable {
     @Column(name = "CON_PUBLISH_END", nullable = false, columnDefinition = "TIMESTAMP")
     private Date publishEnd;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CON_ACC_ID", nullable = false)
     private Account account;
 
@@ -54,6 +59,21 @@ public class Contract implements Serializable {
                     @JoinColumn(name = "CC_CAT_ID", nullable = false)
             })
     private List<Category> categories;
+
+    public Contract() {
+    }
+
+    public Contract(Long id, String name, Date publishStart, Date publishEnd) {
+        this.id = id;
+        this.name = name;
+        this.publishStart = publishStart;
+        this.publishEnd = publishEnd;
+    }
+
+    @PostLoad
+    public void init() {
+
+    }
 
     public Long getId() {
         return id;

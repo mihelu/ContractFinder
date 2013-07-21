@@ -12,7 +12,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-block btn-primary" ng-disabled="!loginForm.$valid">Login</button>
+                <button type="submit" class="btn btn-block btn-primary" ng-disabled="!loginForm.$valid">Zaloguj</button>
             </div>
         </div>
     </form>
@@ -20,7 +20,36 @@
     <a href="#/register" class="btn btn-block btn-danger">Załóż konto</a>
 </div>
 
-<div ui-if="auth.isAuthorized()" ng-init="initAccount()">
-    <div ui-if="account().personal">{{account().user.firstName}} {{account().user.lastName}}</div>
-    <button ng-click="logout()" class="btn btn-danger btn-block">Logout</button>
+<div ui-if="auth.isAuthorized()" ng-init="initAccount()" class="logged-panel">
+    <h4 ui-if="account().personal">{{account().user.firstName}} {{account().user.lastName}}</h4>
+    <h4 ui-if="!account().personal">{{account().company.name}}</h4>
+    <button ng-click="logout()" class="btn btn-danger btn-block">Wyloguj</button>
+    <div class="user-panel-el" ng-init="initContracts()">
+        <h4 class="user-panel-el-header">Wystawione zlecenia</h4>
+
+        <div class="row-fluid">
+            <div class="span9">Nazwa</div>
+            <div class="span3">Ilość ofert</div>
+        </div>
+        <div class="row-fluid" ng-repeat="contract in contracts()">
+            <a href="#/details/{{contract.id}}">
+                <div class="span9 mycontracts-name">{{contract.name}}</div>
+                <div class="span3 mycontracts-offers">{{contract.offers}}</div>
+            </a>
+        </div>
+    </div>
+    <div class="user-panel-el" ng-init="initOffers()">
+        <h4 class="user-panel-el-header">Złożone oferty</h4>
+
+        <div class="row-fluid">
+            <div class="span9">Nazwa zlecenia</div>
+            <div class="span3">Cena</div>
+        </div>
+        <div class="row-fluid" ng-repeat="offer in offers()">
+            <a href="#/details/{{offer.contract.id}}">
+                <div class="span9 myoffers-contract-name">{{offer.contract.name}}</div>
+                <div class="span3 myoffers-offerPrice">{{offer.offerPrice}}</div>
+            </a>
+        </div>
+    </div>
 </div>

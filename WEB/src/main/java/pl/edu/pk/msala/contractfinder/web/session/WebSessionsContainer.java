@@ -1,7 +1,9 @@
 package pl.edu.pk.msala.contractfinder.web.session;
 
 import com.google.common.collect.Maps;
+import pl.edu.pk.msala.contractfinder.web.rest.security.AuthUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -20,6 +22,10 @@ public class WebSessionsContainer {
 
     public static WebSession getWebSession(String sessionId) {
         return sessionMap.get(sessionId);
+    }
+
+    public static WebSession getWebSession(HttpServletRequest httpServletRequest) {
+        return sessionMap.get(AuthUtil.getSessionId(httpServletRequest.getCookies()));
     }
 
     public static void putWebSession(WebSession webSession) {

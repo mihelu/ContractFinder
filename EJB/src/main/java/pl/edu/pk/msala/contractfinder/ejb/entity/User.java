@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import com.google.common.base.Objects;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class User implements Serializable{
     @Column(name = "USE_LASTNAME")
     private String lastName;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Account account;
 

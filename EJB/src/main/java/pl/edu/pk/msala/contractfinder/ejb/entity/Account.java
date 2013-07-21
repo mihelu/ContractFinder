@@ -2,6 +2,7 @@ package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import com.google.common.base.Objects;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,7 +46,7 @@ public class Account implements Serializable {
     @Column(name = "ACC_PERSONAL", nullable = false)
     private Boolean personal;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "CF_ACCOUNT_ROLES",
             joinColumns = {
                     @JoinColumn(name = "ARO_ACC_ID", nullable = false)},
@@ -53,6 +54,11 @@ public class Account implements Serializable {
                     @JoinColumn(name = "ARO_ROL_ID", nullable = false)
             })
     private Set<Role> roles;
+
+    @PostLoad
+    public void init() {
+
+    }
 
     public Long getId() {
         return id;
@@ -117,14 +123,6 @@ public class Account implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-    //    public Set<Contract> getContracts() {
-//        return contracts;
-//    }
-//
-//    public void setContracts(Set<Contract> contracts) {
-//        this.contracts = contracts;
-//    }
 
     @Override
     public String toString() {

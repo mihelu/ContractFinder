@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import com.google.common.base.Objects;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class Company implements Serializable{
     @Column(name = "COM_DESCRIPTION")
     private String description;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "company")
     private Account account;
 

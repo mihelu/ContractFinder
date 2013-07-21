@@ -4,7 +4,6 @@ import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerResponse;
 import com.sun.jersey.spi.container.ContainerResponseFilter;
 import org.joda.time.DateTime;
-import pl.edu.pk.msala.contractfinder.web.constants.Constants;
 import pl.edu.pk.msala.contractfinder.web.rest.security.AuthContext;
 import pl.edu.pk.msala.contractfinder.web.rest.security.AuthUtil;
 import pl.edu.pk.msala.contractfinder.web.session.WebSession;
@@ -25,8 +24,8 @@ public class ResponseFilter implements ContainerResponseFilter {
         if (AuthUtil.shouldFilterUrl(containerRequest.getRequestUri().getPath())) {
             AuthContext securityContext = (AuthContext) containerRequest.getSecurityContext();
             if (securityContext != null) {
-                NewCookie sessionCookie = AuthUtil.createCookie(AuthUtil.SESSIONID, securityContext.getWebSession().getSessionId());
-                NewCookie accessTokenCookie = AuthUtil.createCookie(AuthUtil.ACCESSTOKEN, securityContext.getWebSession().getAccessToken());
+                NewCookie sessionCookie = AuthUtil.createCookie(AuthUtil.SESSION_ID, securityContext.getWebSession().getSessionId());
+                NewCookie accessTokenCookie = AuthUtil.createCookie(AuthUtil.ACCESS_TOKEN, securityContext.getWebSession().getAccessToken());
                 WebSession webSession = securityContext.getWebSession();
                 webSession.setCreateDate(new DateTime());
                 WebSessionsContainer.putWebSession(webSession);
