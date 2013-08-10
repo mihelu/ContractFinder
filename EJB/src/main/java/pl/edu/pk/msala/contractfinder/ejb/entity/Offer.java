@@ -16,12 +16,14 @@ import java.math.BigDecimal;
 @Table(name = "CF_OFFER")
 @NamedQueries({
         @NamedQuery(name = Offer.OFF_FIND_CONTRACT_OFFERS, query = "SELECT off FROM Offer off LEFT JOIN off.contract c WHERE c.id = ?1"),
-        @NamedQuery(name = Offer.OFF_FIND_ACCOUNT_OFFERS, query = "SELECT off FROM Offer off LEFT JOIN off.account a WHERE a.id = ?1")
+        @NamedQuery(name = Offer.OFF_FIND_ACCOUNT_OFFERS, query = "SELECT off FROM Offer off LEFT JOIN off.account a WHERE a.id = ?1"),
+        @NamedQuery(name = Offer.OFF_GET_ACCOUNT_CONTRACT_OFFER, query = "SELECT off FROM Offer off LEFT JOIN off.account a LEFT JOIN off.contract c WHERE a.id = ?1 AND c.id = ?2")
 })
 public class Offer implements Serializable{
 
     public static final String OFF_FIND_CONTRACT_OFFERS = "offFindContractOffers";
     public static final String OFF_FIND_ACCOUNT_OFFERS = "offFindAccountOffers";
+    public static final String OFF_GET_ACCOUNT_CONTRACT_OFFER = "offGetAccountContractOffer";
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "off_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_seq")
@@ -31,8 +33,17 @@ public class Offer implements Serializable{
     @Column(name = "OFF_COMMENT", nullable = true)
     private String comment;
 
+    @Column(name = "OFF_YEARS")
+    private Integer years;
+
+    @Column(name = "OFF_MONTHS")
+    private Integer months;
+
     @Column(name = "OFF_DAYS")
     private Integer days;
+
+    @Column(name = "OFF_HOURS")
+    private Integer hours;
 
     @Column(name = "OFF_OFFER_PRICE", nullable = false)
     private BigDecimal offerPrice;
@@ -66,12 +77,36 @@ public class Offer implements Serializable{
         this.comment = comment;
     }
 
+    public Integer getYears() {
+        return years;
+    }
+
+    public void setYears(Integer years) {
+        this.years = years;
+    }
+
+    public Integer getMonths() {
+        return months;
+    }
+
+    public void setMonths(Integer months) {
+        this.months = months;
+    }
+
     public Integer getDays() {
         return days;
     }
 
     public void setDays(Integer days) {
         this.days = days;
+    }
+
+    public Integer getHours() {
+        return hours;
+    }
+
+    public void setHours(Integer hours) {
+        this.hours = hours;
     }
 
     public BigDecimal getOfferPrice() {

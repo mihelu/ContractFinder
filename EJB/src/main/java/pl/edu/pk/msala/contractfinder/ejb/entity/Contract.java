@@ -44,6 +44,9 @@ public class Contract implements Serializable {
     @Column(name = "CON_PUBLISH_END", nullable = false, columnDefinition = "TIMESTAMP")
     private Date publishEnd;
 
+    @Column(name = "CON_SIGNED", nullable = true)
+    private Boolean signed;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CON_ACC_ID", nullable = false)
     private Account account;
@@ -63,11 +66,12 @@ public class Contract implements Serializable {
     public Contract() {
     }
 
-    public Contract(Long id, String name, Date publishStart, Date publishEnd) {
+    public Contract(Long id, String name, Date publishStart, Date publishEnd, Account account) {
         this.id = id;
         this.name = name;
         this.publishStart = publishStart;
         this.publishEnd = publishEnd;
+        this.account = account;
     }
 
     @PostLoad
@@ -113,6 +117,14 @@ public class Contract implements Serializable {
 
     public void setPublishEnd(Date publishEnd) {
         this.publishEnd = publishEnd;
+    }
+
+    public Boolean getSigned() {
+        return signed;
+    }
+
+    public void setSigned(Boolean signed) {
+        this.signed = signed;
     }
 
     public Account getAccount() {

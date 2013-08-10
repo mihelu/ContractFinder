@@ -13,10 +13,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 /**
@@ -47,9 +44,10 @@ public class ContractManager {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Contract> query = builder.createQuery(Contract.class);
         Root<Contract> root = query.from(Contract.class);
-        query.select(
-                builder.construct(Contract.class, root.get(Contract_.id), root.get(Contract_.name), root.get(Contract_.publishStart), root.get(Contract_.publishEnd))
-        );
+//        root.fetch(Contract_.account, JoinType.LEFT);
+//        query.select(
+//                builder.construct(Contract.class, root.get(Contract_.id), root.get(Contract_.name), root.get(Contract_.publishStart), root.get(Contract_.publishEnd), root.get(Contract_.account))
+//        );
         List<Predicate> predicates = Lists.newArrayList();
         Predicate predicateOr = builder.or(
                 builder.like(builder.lower(root.get(Contract_.name)), "%" + StringUtils.defaultString(findData.getQuery()) + "%"),

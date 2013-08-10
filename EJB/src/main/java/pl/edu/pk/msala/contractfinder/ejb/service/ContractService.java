@@ -7,6 +7,7 @@ import org.joda.time.Period;
 import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
 import pl.edu.pk.msala.contractfinder.ejb.dto.list.AccountContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.dto.list.ContractListData;
+import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Offer;
 import pl.edu.pk.msala.contractfinder.ejb.manager.ContractManager;
@@ -84,6 +85,12 @@ public class ContractService {
                 contractListData.setMinutes(period.getMinutes());
                 contractListData.setSeconds(period.getSeconds());
                 contractListData.setMillis(period.getMillis());
+                Account account = input.getAccount();
+                if (account.getPersonal()) {
+                    contractListData.setPublisher(account.getUser().getFirstName() + " " + account.getUser().getLastName());
+                } else {
+                    contractListData.setPublisher(account.getCompany().getName());
+                }
                 return contractListData;
             }
         }));

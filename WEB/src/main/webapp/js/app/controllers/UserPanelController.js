@@ -60,4 +60,11 @@ function UserPanelCtrl($scope, Auth, $http, $rootScope) {
             $scope.initContracts();
         }
     );
+
+    $rootScope.$on(
+        "event:offerAdded",
+        function () {
+            $scope.initOffers();
+        }
+    );
 };

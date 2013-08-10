@@ -22,11 +22,12 @@ public class ContractListData implements Serializable{
     private int minutes;
     private int seconds;
     private int millis;
+    private String publisher;
 
     public ContractListData() {
     }
 
-    public ContractListData(Long id, String name, Date publishStart, int months, int days, int hours, int minutes, int seconds, int millis) {
+    public ContractListData(Long id, String name, Date publishStart, int months, int days, int hours, int minutes, int seconds, int millis, String publisher) {
         this.id = id;
         this.name = name;
         this.publishStart = publishStart;
@@ -36,6 +37,7 @@ public class ContractListData implements Serializable{
         this.minutes = minutes;
         this.seconds = seconds;
         this.millis = millis;
+        this.publisher = publisher;
     }
 
     public Long getId() {
@@ -108,5 +110,13 @@ public class ContractListData implements Serializable{
 
     public void setMillis(int millis) {
         this.millis = millis;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 }

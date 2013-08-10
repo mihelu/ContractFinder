@@ -1,5 +1,6 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
+import pl.edu.pk.msala.contractfinder.ejb.dto.OfferData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Offer;
 import pl.edu.pk.msala.contractfinder.ejb.service.OfferService;
 
@@ -16,5 +17,9 @@ import java.util.List;
 @Remote
 public interface OfferFacadeRemote {
 
+    public Offer createOffer(Offer offer);
+
     public List<Offer> findAccountOffers(Long accountId);
+
+    public OfferData getAccountContactOffer(Long accountId, Long contractId);
 }

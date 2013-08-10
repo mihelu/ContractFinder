@@ -71,15 +71,37 @@ mycontracts-offers {
 
 /*Contract details*/
 .details-publisher {
-    border: 1px solid #000000;
+    padding: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.details-publisher-header {
+    text-align: center;
 }
 
 .details-name {
-    border: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.details-name-header {
+    text-align: center;
+}
+
+.details-description {
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    margin-top: 10px;
 }
 
 .details-myoffer {
-    border: 1px solid #000000;
+    padding: 15px;
 }
 
 .details-nooffer {
@@ -87,33 +109,25 @@ mycontracts-offers {
     font-size: 20px;
 }
 
+.offer-account, .offer-comment, .offer-time, .offer-price {
+    padding-top: 15px;
+}
+
 /*Validation*/
-input.ng-pristine.ng-invalid {
+input.ng-invalid.ng-invalid-required {
     border: solid 2px red;
     background: url('/img/invalid.png') no-repeat right;
 }
-
-input.ng-dirty.ng-invalid {
-    border: solid 2px red;
-    background: url('/img/invalid.png') no-repeat right;
-}
-
-input.ng-dirty.ng-valid {
+input.ng-valid.ng-valid-required {
     border: solid 2px green;
     background: url('/img/valid.png') no-repeat right;
 }
 
-textarea.ng-pristine.ng-invalid {
+textarea.ng-invalid.ng-invalid-required {
     border: solid 2px red;
     background: url('/img/invalid.png') no-repeat right;
 }
-
-textarea.ng-dirty.ng-invalid {
-    border: solid 2px red;
-    background: url('/img/invalid.png') no-repeat right;
-}
-
-textarea.ng-dirty.ng-valid {
+textarea.ng-valid.ng-valid-required {
     border: solid 2px green;
     background: url('/img/valid.png') no-repeat right;
 }

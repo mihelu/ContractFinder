@@ -1,6 +1,8 @@
 package pl.edu.pk.msala.contractfinder.ejb.manager;
 
 import pl.edu.pk.msala.contractfinder.ejb.entity.Offer;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppException;
+import pl.edu.pk.msala.contractfinder.ejb.utils.QueryUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -30,5 +32,19 @@ public class OfferManager {
 
     public List<Offer> findAccountOffers(Long accountId) {
         return entityManager.createNamedQuery(Offer.OFF_FIND_ACCOUNT_OFFERS).setParameter(1, accountId).getResultList();
+    }
+
+    public Offer getAccountContractOffer(Long accountId, Long contactId) {
+        try {
+            return QueryUtil.getSingleResult(entityManager.createNamedQuery(Offer.OFF_GET_ACCOUNT_CONTRACT_OFFER, Offer.class).setParameter(1, accountId).setParameter(2, contactId));
+        } catch (AppException e) {
+            return null;
+        }
+    }
+
+    public Offer createOffer(Offer offer) {
+        entityManager.merge(offer);
+        entityManager.flush();
+        return offer;
     }
 }

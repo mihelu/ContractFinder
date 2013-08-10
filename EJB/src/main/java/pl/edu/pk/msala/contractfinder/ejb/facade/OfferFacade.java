@@ -1,6 +1,8 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
+import pl.edu.pk.msala.contractfinder.ejb.dto.OfferData;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Offer;
+import pl.edu.pk.msala.contractfinder.ejb.manager.OfferManager;
 import pl.edu.pk.msala.contractfinder.ejb.service.OfferService;
 
 import javax.ejb.EJB;
@@ -17,9 +19,21 @@ import java.util.List;
 public class OfferFacade implements OfferFacadeRemote {
     @EJB
     private OfferService offerService;
+    @EJB
+    private OfferManager offerManager;
+
+    @Override
+    public Offer createOffer(Offer offer) {
+        return offerManager.createOffer(offer);
+    }
 
     @Override
     public List<Offer> findAccountOffers(Long accountId) {
         return offerService.findAccountOffers(accountId);
+    }
+
+    @Override
+    public OfferData getAccountContactOffer(Long accountId, Long contractId) {
+        return offerService.getAccountContractOffer(accountId, contractId);
     }
 }
