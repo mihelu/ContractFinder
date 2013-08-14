@@ -5,7 +5,7 @@ ContractFinder.directive('datetimepicker', function () {
             $(el).datetimepicker({
                 todayBtn: "linked",
                 todayHighlight: true,
-                format: "yyyy-mm-ddThh:ii:ssZ",
+                format: "dd-mm-yyyy hh:ii:ss",
                 language: 'pl'
             });
             if (!ngModel) {

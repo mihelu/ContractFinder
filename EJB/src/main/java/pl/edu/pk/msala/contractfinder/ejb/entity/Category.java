@@ -1,6 +1,9 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +14,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "CF_CATEGORY")
-public class Category {
+@NamedQueries({
+  @NamedQuery(name = Category.CAT_FIND_ALL, query = "SELECT c FROM Category c")
+})
+public class Category implements Serializable{
+
+    public static final String CAT_FIND_ALL = "catFindAll";
 
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "cat_id_seq", initialValue = 1, allocationSize = 1)
@@ -22,6 +30,7 @@ public class Category {
     @Column(name="CAT_NAME", nullable = false)
     private String name;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private List<Contract> contracts;
 

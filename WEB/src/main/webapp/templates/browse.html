@@ -1,11 +1,32 @@
-<button ng-click="find()" class="btn btn-danger btn-block">Szukaj</button>
-<br/>
+<div class="row-fluid findContractForm">
+    <div class="span8 offset2">
+        <div class="span12">
+            <input class="span12" type="text" placeholder="Szukaj w nazwie, opisie" ng-model="findData.query">
+        </div>
+        <div class="span12">
+            <div class="span3">Kategorie</div>
+            <div class="span9">
+                <button id="openAddCategory" type="button" class="btn btn-primary" ng-click="openAddCategory()">Dodaj</button><br>
+                <ul class="selected-categories">
+                    <li ng-repeat="category in selectedCategories">{{category.name}}<button type="button" ng-click="removeCategory(category)" class="close" style="padding-left: 6px;">&times;</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="span12">
+            <div class="span4">Szukaj w zakończonych</div>
+            <div class="span8"><input type="checkbox" style="text-align: left;" ng-model="findData.searchInFinished"></div>
+        </div>
+        <button ng-click="find()" class="btn btn-danger btn-block ng-scope">Szukaj</button>
+    </div>
+</div>
+
 <div class="row-fluid">
     <div class="span2">Wystawiający</div>
     <div class="span4">Nazwa</div>
     <div class="span3">Data wystawienia</div>
     <div class="span3">Do końca</div>
 </div>
+<div class="span12" style="text-align: center;" ui-if="contracts().length <= 0"><h3>Brak wyników</h3></div>
 
 <div ng-repeat="contract in contracts()" class="row-fluid findListRow">
     <a href="#/details/{{contract.id}}">
@@ -14,4 +35,27 @@
         <div class="span3 browse-publish-date">{{contract.publishStart | date:'dd-MM-yyyy HH:mm:ss'}}</div>
         <div class="span3 browse-time-left" timeleft="" ng-model="contract"></div>
     </a>
+</div>
+
+<div modal="shouldAddCategoryBeOpen" close="closeAddCategory()" options="addCategoryModalOpts" ng-init="initCategories()">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeAddCategory()">&times;</button>
+        <h3 class="modal-title">Dodaj kategorie</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="addCategoryForm" name="addCategoryForm" novalidate>
+            <div class="control-group">
+                <label class="control-label">Kategoria</label>
+
+                <div class="controls">
+                    <select ng-model="selected" ng-options="item.id as item.name for item in availableCategories"
+                            id="categorySelect"></select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="closeAddCategory()">Cancel</button>
+        <button class="btn btn-danger" ng-disabled="!addCategoryForm.$valid" ng-click="addCategory()">Dodaj</button>
+    </div>
 </div>

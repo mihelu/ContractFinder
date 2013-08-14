@@ -28,11 +28,46 @@
     text-align: left;
 }
 
-mycontracts-offers {
+.mycontracts-offers {
 
 }
 
+.myoffers-contract-name {
+    text-align: left;
+}
+
+.myoffers-offerPrice {
+
+}
+
+.selected-categories {
+    list-style-type: none;
+}
+
+.selected-categories > li {
+    float: left;
+    padding: 7px;
+    margin: 1px;
+    border-right: 1px solid #000000;
+}
+
+.contract-categories {
+    list-style-type: none;
+}
+
+.contract-categories > li {
+    float: left;
+    padding: 7px;
+    margin: 1px;
+    border-right: 1px solid #000000;
+}
+
 /*Contracts find*/
+.findContractForm {
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
 .findListRow {
     color: #000000;
     height: 50px;
@@ -82,7 +117,6 @@ mycontracts-offers {
 
 .details-name {
     border-left: 1px solid #000000;
-    border-right: 1px solid #000000;
     padding: 10px;
     overflow: hidden;
 }
@@ -96,11 +130,24 @@ mycontracts-offers {
     border-bottom: 1px solid #000000;
     padding: 10px;
     overflow: hidden;
-    margin-bottom: 50px;
     margin-top: 10px;
 }
 
+.details-price-time {
+    border-bottom: 1px solid #000000;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.details-categories {
+    border-bottom: 1px solid #000000;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
 .details-myoffer {
+    border-left: 1px solid #000000;
     padding: 15px;
 }
 
@@ -118,6 +165,7 @@ input.ng-invalid.ng-invalid-required {
     border: solid 2px red;
     background: url('/img/invalid.png') no-repeat right;
 }
+
 input.ng-valid.ng-valid-required {
     border: solid 2px green;
     background: url('/img/valid.png') no-repeat right;
@@ -127,7 +175,22 @@ textarea.ng-invalid.ng-invalid-required {
     border: solid 2px red;
     background: url('/img/invalid.png') no-repeat right;
 }
+
 textarea.ng-valid.ng-valid-required {
     border: solid 2px green;
     background: url('/img/valid.png') no-repeat right;
+}
+
+/**Bootstrap*/
+.navbar-inverse .brand {
+    color: #FFF;
+}
+
+.navbar-inverse .brand, .navbar-inverse .nav>li>a {
+    color: #FFF;
+}
+
+.navbar-inverse .nav .active>a, .navbar-inverse .nav .active>a:hover, .navbar-inverse .nav .active>a:focus {
+    color: #000;
+    background-color: #FFF;
 }

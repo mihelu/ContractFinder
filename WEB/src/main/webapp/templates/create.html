@@ -33,9 +33,50 @@
                    ng-model="contract.publishEnd" required>
         </div>
     </div>
+
+    <div class="control-group">
+        <label class="control-label" for="maxPrice">Cena maksymalna</label>
+
+        <div class="controls">
+            <input type="text" id="maxPrice" name="maxPrice" placeholder="Cena maksymalna" ng-model="contract.maxPrice" required>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Kategorie</label>
+
+        <div class="controls">
+            <button id="openAddCategory" type="button" class="btn btn-primary" ng-click="openAddCategory()">Dodaj</button><br>
+            <ul class="selected-categories">
+                <li ng-repeat="category in selectedCategories">{{category.name}}<button type="button" ng-click="removeCategory(category)" class="close" style="padding-left: 6px;">&times;</button></li>
+            </ul>
+        </div>
+    </div>
     <div>
         <button type="submit" class="btn btn-block btn-danger btn-large" ng-disabled="!createContractForm.$valid">
             Utwórz
         </button>
     </div>
 </form>
+
+<div modal="shouldAddCategoryBeOpen" close="closeAddCategory()" options="addCategoryModalOpts" ng-init="initCategories()">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeAddCategory()">&times;</button>
+        <h3 class="modal-title">Dodaj kategorie</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="addCategoryForm" name="addCategoryForm" novalidate>
+            <div class="control-group">
+                <label class="control-label">Kategoria</label>
+
+                <div class="controls">
+                        <select ng-model="selected" ng-options="item.id as item.name for item in availableCategories"
+                                id="categorySelect"></select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="closeAddCategory()">Cancel</button>
+        <button class="btn btn-danger" ng-disabled="!addCategoryForm.$valid" ng-click="addCategory()">Dodaj</button>
+    </div>
+</div>

@@ -54,6 +54,10 @@ public class OfferService extends WebSessionResolver{
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAccountOffers() {
         List<Offer> offers = offerFacadeRemote.findAccountOffers(resolveWebSession().getAccountId());
+        for (Offer offer : offers) {
+            offer.getContract().setOffers(null);
+            offer.getContract().setCategories(null);
+        }
         return Response.ok(offers).build();
     }
 

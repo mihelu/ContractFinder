@@ -10,6 +10,7 @@ import pl.edu.pk.msala.contractfinder.ejb.manager.OfferManager;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,8 +35,6 @@ public class OfferService {
         List<Offer> offers = offerManager.findAccountOffers(accountId);
         for (Offer offer : offers) {
             Hibernate.initialize(offer.getContract());
-            offer.getContract().setOffers(null);
-            offer.getContract().setCategories(null);
         }
         return offers;
     }
@@ -44,8 +43,10 @@ public class OfferService {
         OfferData result = new OfferData();
         Contract contract = contractManager.getContract(contactId);
         if (contract != null) {
-            if(contract.getAccount().getId().equals(accountId)) {
-                result.setAllowed(Boolean.FALSE);
+            if(contract.getPublishEnd().before(new Date())) {
+                result.setAllowed(false);
+            }else if(contract.getAccount().getId().equals(accountId)) {
+                result.setAllowed(false);
             } else {
                 Offer offer = offerManager.getAccountContractOffer(accountId, contactId);
                 entityManager.detach(offer);
@@ -54,7 +55,7 @@ public class OfferService {
                     offer.setAccount(null);
                 }
                 result.setOffer(offer);
-                result.setAllowed(Boolean.TRUE);
+                result.setAllowed(true);
             }
         }
         return result;

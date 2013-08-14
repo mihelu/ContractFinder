@@ -42,15 +42,11 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location, Alerts, $ro
     $scope.openAddOffer = function () {
         $scope.shouldAddOfferBeOpen = true;
         $scope.tmpOffer = angular.copy($scope.offer);
-        console.log('tmp' + $scope.tmpOffer.comment);
-        console.log('offer' + $scope.offer.comment);
     }
 
     $scope.closeAddOffer = function () {
         $scope.shouldAddOfferBeOpen = false;
         $scope.tmpOffer = angular.copy($scope.offer);
-        console.log('tmp' + $scope.tmpOffer.comment);
-        console.log('offer' + $scope.offer.comment);
     };
 
     $scope.addOfferModalOpts = {
@@ -63,7 +59,6 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location, Alerts, $ro
         var contract = new Object();
         contract.id = $routeParams.id;
         $scope.offer.contract = contract;
-        console.log($scope.offer);
         $scope.$apply($scope.offer);
         $http.post("rest/offer/create", $scope.offer).
             success(function (data) {

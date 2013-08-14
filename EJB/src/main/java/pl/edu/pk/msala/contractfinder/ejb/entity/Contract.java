@@ -5,6 +5,7 @@ import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class Contract implements Serializable {
     @Column(name = "CON_PUBLISH_END", nullable = false, columnDefinition = "TIMESTAMP")
     private Date publishEnd;
 
+    @Column(name = "CON_MAX_PRICE", nullable = true)
+    private BigDecimal maxPrice;
+
     @Column(name = "CON_SIGNED", nullable = true)
     private Boolean signed;
 
@@ -51,10 +55,10 @@ public class Contract implements Serializable {
     @JoinColumn(name = "CON_ACC_ID", nullable = false)
     private Account account;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract", cascade = CascadeType.REMOVE)
     private List<Offer> offers;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(name = "CF_CONTRACT_CATEGORY",
             joinColumns = {
                     @JoinColumn(name = "CC_CON_ID", nullable = false)},
@@ -117,6 +121,14 @@ public class Contract implements Serializable {
 
     public void setPublishEnd(Date publishEnd) {
         this.publishEnd = publishEnd;
+    }
+
+    public BigDecimal getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
     public Boolean getSigned() {
