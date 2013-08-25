@@ -47,4 +47,10 @@ public class OfferManager {
         entityManager.flush();
         return offer;
     }
+
+    public void removeOffer(Long id) {
+        Offer toRemove = entityManager.find(Offer.class, id);
+        entityManager.remove(toRemove);
+        entityManager.flush();
+    }
 }

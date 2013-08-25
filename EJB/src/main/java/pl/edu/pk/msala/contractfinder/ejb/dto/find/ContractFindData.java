@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.dto.find;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class ContractFindData implements Serializable{
     private String query;
     private List<Long> categories;
     private boolean searchInFinished;
+
 
     public String getQuery() {
         return query;

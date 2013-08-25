@@ -160,6 +160,16 @@
     padding-top: 15px;
 }
 
+.offerRemoved {
+    background-color: rgb(255, 211, 211);
+}
+
+/*Profile*/
+.profile-row {
+    border-bottom: 1px solid #000000;
+    padding-top: 12px;
+}
+
 /*Validation*/
 input.ng-invalid.ng-invalid-required {
     border: solid 2px red;

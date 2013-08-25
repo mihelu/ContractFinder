@@ -3,7 +3,10 @@ package pl.edu.pk.msala.contractfinder.ejb.service;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.hibernate.Hibernate;
+import org.joda.time.Days;
+import org.joda.time.DurationFieldType;
 import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
 import pl.edu.pk.msala.contractfinder.ejb.dto.list.AccountContractListData;
 import pl.edu.pk.msala.contractfinder.ejb.dto.list.ContractListData;
@@ -56,6 +59,10 @@ public class ContractService {
         return repackContractList(contractManager.findContracts(findData));
     }
 
+    public List<ContractListData> pullFinishedContracts(Long accountId) {
+        return repackContractList(contractManager.pullFinishedContracts(accountId));
+    }
+
     private List<AccountContractListData> repackAccountContractList(List<Contract> contracts) {
         return Lists.newArrayList(Lists.transform(contracts, new Function<Contract, AccountContractListData>() {
             @Override
@@ -78,8 +85,11 @@ public class ContractService {
                 contractListData.setId(input.getId());
                 contractListData.setName(input.getName());
                 contractListData.setPublishStart(input.getPublishStart());
-                Period period = new Period(new Date().getTime(), input.getPublishEnd().getTime());
+                long now = new Date().getTime();
+                long end = input.getPublishEnd().getTime();
+                Period period = new Period(end - now).normalizedStandard();
                 contractListData.setMonths(period.getMonths());
+                contractListData.setWeeks(period.getWeeks());
                 contractListData.setDays(period.getDays());
                 contractListData.setHours(period.getHours());
                 contractListData.setMinutes(period.getMinutes());

@@ -48,8 +48,9 @@ public class Contract implements Serializable {
     @Column(name = "CON_MAX_PRICE", nullable = true)
     private BigDecimal maxPrice;
 
-    @Column(name = "CON_SIGNED", nullable = true)
-    private Boolean signed;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CON_SIGNED", nullable = true)
+    private Account signed;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CON_ACC_ID", nullable = false)
@@ -131,11 +132,11 @@ public class Contract implements Serializable {
         this.maxPrice = maxPrice;
     }
 
-    public Boolean getSigned() {
+    public Account getSigned() {
         return signed;
     }
 
-    public void setSigned(Boolean signed) {
+    public void setSigned(Account signed) {
         this.signed = signed;
     }
 

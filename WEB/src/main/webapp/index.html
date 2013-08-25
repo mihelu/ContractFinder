@@ -22,10 +22,12 @@
     <script src="js/app/controllers/appController.js"></script>
     <script src="js/app/controllers/userPanelController.js"></script>
     <script src="js/app/controllers/homeController.js"></script>
+    <script src="js/app/controllers/profileController.js"></script>
     <script src="js/app/controllers/createContractController.js"></script>
     <script src="js/app/controllers/detailsContractController.js"></script>
     <script src="js/app/controllers/browseContractsController.js"></script>
     <script src="js/app/controllers/registerAccountController.js"></script>
+    <script src="js/app/controllers/adminController.js"></script>
     <script src="js/app/services/authService.js"></script>
     <script src="js/app/services/alertsService.js"></script>
     <script src="js/app/directives/datetimepicker.js"></script>
@@ -33,9 +35,9 @@
     <script src="js/app/directives/offerTime.js"></script>
 </head>
 <body>
+<div style="position: absolute; top: 0px; left: 0px; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; z-index: 99999;" ui-if="loadingIndicator()"></div>
 
 <div class="container">
-
     <div class="navbar navbar-inverse">
         <div class="navbar-inner">
             <a class="brand" href="#/home">ContractFinder</a>

@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.facade;
 
 import pl.edu.pk.msala.contractfinder.ejb.entity.Category;
+import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 
 import javax.ejb.Remote;
 import java.util.List;
@@ -15,4 +16,10 @@ import java.util.List;
 public interface CategoryFacadeRemote {
 
     public List<Category> getCategoriesDict();
+
+    public List<Category> getAllCategories();
+
+    public void changeCategoryStatus(Long id, boolean removed);
+
+    public void createCategory(String name) throws AppRollbackException;
 }

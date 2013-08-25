@@ -1,6 +1,7 @@
-function UserPanelCtrl($scope, Auth, $http, $rootScope) {
+function UserPanelCtrl($scope, Auth, Alerts, $http, $rootScope) {
 
     $scope.credentials = {};
+    $scope.pendingContracts = {};
     var account = {};
     var contracts = {};
     var offers = {};
@@ -33,6 +34,19 @@ function UserPanelCtrl($scope, Auth, $http, $rootScope) {
                 account = data;
             }).error(function (error) {
                 $scope.logout();
+            });
+        $http.get("/rest/contract/finished").
+            success(function (data) {
+                $scope.pendingContracts = data;
+                if (data.length == 1) {
+                    Alerts.info('Czas wystawienia zlecenia zakończył się! Przejdź do profilu po więcej szczegółów');
+                    return;
+                }
+                if (data.length > 0) {
+                    Alerts.info('Czas wystawienia ' + data.length + ' zleceń zakończył się! Przejdź do profilu po więcej szczegółów');
+                }
+            }).error(function (error) {
+
             });
     }
 

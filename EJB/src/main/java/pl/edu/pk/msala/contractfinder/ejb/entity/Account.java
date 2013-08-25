@@ -18,8 +18,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "CF_ACCOUNT")
+@NamedQueries({
+        @NamedQuery(name = Account.ACC_GET_BY_LOGIN, query = "SELECT a FROM Account a WHERE a.login = ?1")
+})
 public class Account implements Serializable {
 
+    public static final String ACC_GET_BY_LOGIN = "accGetByLogin";
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "acc_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_seq")
@@ -31,6 +35,9 @@ public class Account implements Serializable {
 
     @Column(name = "ACC_PASSWORD", nullable = false)
     private String password;
+
+    @Column(name = "ACC_EMAIL", nullable = false)
+    private String email;
 
     @Column(name = "ACC_CREATE_DATE", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createDate;
@@ -82,6 +89,14 @@ public class Account implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getCreateDate() {

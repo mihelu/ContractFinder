@@ -47,4 +47,15 @@ public class AccountService {
         }
         return Response.ok().entity(account).build();
     }
+
+    @GET
+    @Path("/details/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAccount(@PathParam("id") Long id) {
+        Account account = accountFacadeRemote.getAccount(id);
+        account.setLogin(null);
+        account.setPassword(null);
+        return Response.ok(account).build();
+    }
 }

@@ -21,8 +21,9 @@
 </div>
 
 <div ui-if="auth.isAuthorized()" ng-init="initAccount()" class="logged-panel">
-    <h4 ui-if="account().personal">{{account().user.firstName}} {{account().user.lastName}}</h4>
-    <h4 ui-if="!account().personal">{{account().company.name}}</h4>
+    <h5 style="color:red" ui-if="pendingContracts.length > 0"><span class="icon-bell"></span>Oczekujące zlecenia ({{pendingContracts.length}})</h5>
+    <a href="#/profile/{{account().id}}" ui-if="account().personal"><h4>{{account().user.firstName}} {{account().user.lastName}}</h4></a>
+    <a href="#/profile/{{account().id}}" ui-if="!account().personal"><h4>{{account().company.name}}</h4></a>
     <button ng-click="logout()" class="btn btn-danger btn-block">Wyloguj</button>
     <div class="user-panel-el" ng-init="initContracts()">
         <h4 class="user-panel-el-header">Wystawione zlecenia</h4>

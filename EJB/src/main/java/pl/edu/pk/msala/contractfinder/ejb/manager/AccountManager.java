@@ -58,6 +58,10 @@ public class AccountManager {
         return entityManager.find(Account.class, id);
     }
 
+    public Account getAccount(String login) throws AppException {
+        return QueryUtil.<Account>getSingleResult(entityManager.createNamedQuery(Account.ACC_GET_BY_LOGIN, Account.class).setParameter(1, login));
+    }
+
     public Role getRole(String name) throws AppException {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Role> query = builder.createQuery(Role.class);

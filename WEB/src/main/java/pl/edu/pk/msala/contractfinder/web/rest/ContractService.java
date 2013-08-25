@@ -17,6 +17,7 @@ import pl.edu.pk.msala.contractfinder.web.rest.security.AuthUtil;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionResolver;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionsContainer;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -83,6 +84,14 @@ public class ContractService extends WebSessionResolver {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAccountContracts() {
         List<AccountContractListData> contracts = contractFacadeRemote.findAccountContracts(resolveWebSession().getAccountId());
+        return Response.ok(contracts).build();
+    }
+
+    @GET
+    @Path("/finished")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response finished() {
+        List<ContractListData> contracts = contractFacadeRemote.pullFinishedContracts(resolveWebSession().getAccountId());
         return Response.ok(contracts).build();
     }
 }

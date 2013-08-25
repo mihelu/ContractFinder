@@ -10,11 +10,11 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location, Alerts, $ro
     $scope.tmpOffer = {};
     $scope.offerAllowed = false;
 
-    $scope.isOfferAllowed = function() {
+    $scope.isOfferAllowed = function () {
         return $scope.offerAllowed;
     }
 
-    $scope.getOffer = function() {
+    $scope.getOffer = function () {
         console.log($scope.offer);
         return $scope.offer;
     }
@@ -31,7 +31,7 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location, Alerts, $ro
         $http.get("/rest/offer/contract/" + $routeParams.id).
             success(function (data) {
                 console.log(data);
-                if(data.allowed == true) {
+                if (data.allowed == true) {
                     $scope.offer = data.offer;
                 }
                 $scope.offerAllowed = data.allowed;
@@ -54,7 +54,7 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location, Alerts, $ro
         dialogFade: true
     };
 
-    $scope.createOffer = function() {
+    $scope.createOffer = function () {
         $scope.offer = angular.copy($scope.tmpOffer);
         var contract = new Object();
         contract.id = $routeParams.id;
@@ -69,6 +69,26 @@ function DetailsContractCtrl($scope, $routeParams, $http, $location, Alerts, $ro
                 $scope.initContract();
             });
         $scope.shouldAddOfferBeOpen = false;
-    }
+    };
+
+    $scope.removeOffer = function () {
+        $http.get("/rest/offer/remove/" + $scope.offer.id).
+            success(function (data) {
+                $scope.initContract();
+            }).error(function (error) {
+            });
+    };
+
+    $scope.reopenOffer = function () {
+        $http.get("/rest/offer/reopen/" + $scope.offer.id).
+            success(function (data) {
+                $scope.initContract();
+            }).error(function (error) {
+            });
+    };
+
+    $scope.removed = function (offer) {
+        return offer.removed ? 'offerRemoved' : '';
+    };
 
 };

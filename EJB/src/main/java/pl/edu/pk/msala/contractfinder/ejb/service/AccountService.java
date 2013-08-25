@@ -35,7 +35,7 @@ public class AccountService {
             account.setRoles(Sets.newHashSet(userRole));
             accountManager.createAccount(account);
         } catch (Exception e) {
-            throw new AppRollbackException(e);
+            throw new AppRollbackException("Rejestracja nie powiodła się!");
         }
     }
 

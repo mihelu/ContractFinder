@@ -1,7 +1,5 @@
 package pl.edu.pk.msala.contractfinder.ejb.dto.list;
 
-import org.joda.time.Period;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,12 +9,13 @@ import java.util.Date;
  * Date: 24.06.13
  * Time: 16:54
  */
-public class ContractListData implements Serializable{
+public class ContractListData implements Serializable {
 
     private Long id;
     private String name;
     private Date publishStart;
     private int months;
+    private int weeks;
     private int days;
     private int hours;
     private int minutes;
@@ -27,11 +26,12 @@ public class ContractListData implements Serializable{
     public ContractListData() {
     }
 
-    public ContractListData(Long id, String name, Date publishStart, int months, int days, int hours, int minutes, int seconds, int millis, String publisher) {
+    public ContractListData(Long id, String name, Date publishStart, int months, int weeks, int days, int hours, int minutes, int seconds, int millis, String publisher) {
         this.id = id;
         this.name = name;
         this.publishStart = publishStart;
         this.months = months;
+        this.weeks = weeks;
         this.days = days;
         this.hours = hours;
         this.minutes = minutes;
@@ -70,6 +70,14 @@ public class ContractListData implements Serializable{
 
     public void setMonths(int months) {
         this.months = months;
+    }
+
+    public int getWeeks() {
+        return weeks;
+    }
+
+    public void setWeeks(int weeks) {
+        this.weeks = weeks;
     }
 
     public int getDays() {

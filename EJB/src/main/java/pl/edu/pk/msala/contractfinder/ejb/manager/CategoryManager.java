@@ -24,7 +24,26 @@ public class CategoryManager {
     @PersistenceContext(unitName = "ContractFinderDB")
     private EntityManager entityManager;
 
+    public List<Category> getCategoriesDict() {
+        return entityManager.createNamedQuery(Category.CAT_FIND_ALL_NOT_REMOVED, Category.class).getResultList();
+    }
+
     public List<Category> findAllCategories() {
         return entityManager.createNamedQuery(Category.CAT_FIND_ALL, Category.class).getResultList();
+    }
+
+    public Category getCategory(long id) {
+        return entityManager.find(Category.class, id);
+    }
+
+    public void modifyCategory(Category category) {
+        entityManager.merge(category);
+        entityManager.flush();
+    }
+
+    public Category createCategory(Category category) {
+        Category created = entityManager.merge(category);
+        entityManager.flush();
+        return created;
     }
 }

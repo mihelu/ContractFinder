@@ -26,4 +26,6 @@ public interface ContractFacadeRemote {
     public List<ContractListData> findContracts(ContractFindData findData);
 
     public List<AccountContractListData> findAccountContracts(Long id);
+
+    public List<ContractListData> pullFinishedContracts(Long accountId);
 }

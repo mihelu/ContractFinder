@@ -1,0 +1,51 @@
+<div ng-init="ping()" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <div class="row-fluid" style="text-align: center">
+        <h4>Panel administracyjny</h4>
+    </div>
+    <div class="row-fluid" ng-init="initCategories()">
+        <div class="span9">
+            <h4>Kategorie</h4>
+
+            <div class="row-fluid">
+                <div class="span6">Nazwa</div>
+                <div class="span2">Status</div>
+                <div class="span1"></div>
+            </div>
+            <div class="row-fluid" ng-repeat="category in categories">
+                <div class="span6">{{category.name}}</div>
+                <div class="span2">
+                    <span ui-if="category.removed">Usunięta</span>
+                    <span ui-if="!category.removed">Aktywna</span>
+                </div>
+                <div class="span1">
+                    <button type="button" ui-if="category.removed" ng-click="restoreCategory(category.id)">Przywróć</button>
+                    <button type="button" ui-if="!category.removed" ng-click="removeCategory(category.id)">Usuń</button>
+                </div>
+            </div>
+            <button type="button" ng-click="openCreateCategory()">Stwórz kategorie</button>
+        </div>
+    </div>
+</div>
+
+<div modal="shouldCreateCategoryBeOpen" close="closeCreateCategory()" options="createCategoryModalOpts">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeCreateCategory()">&times;</button>
+        <h3 class="modal-title">Stwórz kategorie</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="createCategoryForm" name="createCategoryForm" novalidate>
+            <div class="control-group">
+                <label class="control-label">Nazwa</label>
+
+                <div class="controls">
+                    <input type="text" ng-model="categoryName" required/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="closeCreateCategory()">Cancel</button>
+        <button class="btn btn-danger" ng-disabled="!createCategoryForm.$valid" ng-click="createCategory()">Zapisz</button>
+    </div>
+</div>

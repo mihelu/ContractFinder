@@ -1,6 +1,7 @@
 package pl.edu.pk.msala.contractfinder.ejb.entity;
 
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.math.BigDecimal;
         @NamedQuery(name = Offer.OFF_FIND_ACCOUNT_OFFERS, query = "SELECT off FROM Offer off LEFT JOIN off.account a WHERE a.id = ?1"),
         @NamedQuery(name = Offer.OFF_GET_ACCOUNT_CONTRACT_OFFER, query = "SELECT off FROM Offer off LEFT JOIN off.account a LEFT JOIN off.contract c WHERE a.id = ?1 AND c.id = ?2")
 })
+@SQLDelete(sql = "UPDATE CF_OFFER SET OFF_REMOVED = TRUE WHERE OFF_ID = ?")
 public class Offer implements Serializable{
 
     public static final String OFF_FIND_CONTRACT_OFFERS = "offFindContractOffers";
@@ -47,6 +49,9 @@ public class Offer implements Serializable{
 
     @Column(name = "OFF_OFFER_PRICE", nullable = false)
     private BigDecimal offerPrice;
+
+    @Column(name = "OFF_REMOVED", nullable = true)
+    private Boolean removed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OFF_CON_ID", nullable = false)
@@ -115,6 +120,14 @@ public class Offer implements Serializable{
 
     public void setOfferPrice(BigDecimal offerPrice) {
         this.offerPrice = offerPrice;
+    }
+
+    public Boolean getRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
     }
 
     public Contract getContract() {

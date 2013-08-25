@@ -14,15 +14,19 @@ ContractFinder.config(
             {
                 redirectTo: '/home'
             }
-        )
-            .when(
+        ).when(
             "/home",
             {
                 templateUrl: '/templates/home.html',
                 controller: HomeCtrl
             }
-        )
-            .when(
+        ).when(
+            "/profile/:id",
+            {
+                templateUrl: '/templates/profile.html',
+                controller: ProfileCtrl
+            }
+        ).when(
             "/create",
             {
                 templateUrl: '/templates/create.html',
@@ -50,6 +54,12 @@ ContractFinder.config(
             "/forbidden",
             {
                 templateUrl: '/templates/forbidden.html'
+            }
+        ).when(
+            "/admin",
+            {
+                templateUrl: '/templates/admin.html',
+                controller: AdminCtrl
             }
         ).when(
             "/noPage",

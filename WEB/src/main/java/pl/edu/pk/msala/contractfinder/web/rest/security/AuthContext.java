@@ -42,6 +42,9 @@ public class AuthContext implements SecurityContext{
         Iterator<Role> it = webSession.getRoles().iterator();
         while (it.hasNext()) {
             isInRole = s.equals(it.next().getName());
+            if(isInRole) {
+                break;
+            }
         }
         if(!isInRole) {
             Response denied = Response.status(Response.Status.FORBIDDEN).entity("Permission Denied").build();

@@ -69,4 +69,22 @@ public class OfferService extends WebSessionResolver{
         OfferData offer = offerFacadeRemote.getAccountContactOffer(resolveWebSession().getAccountId(), id);
         return Response.ok(offer).build();
     }
+
+    @GET
+    @Path("/remove/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeOffer(@PathParam("id") Long id) {
+        offerFacadeRemote.removeOffer(id);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/reopen/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response reopenOffer(@PathParam("id") Long id) {
+        offerFacadeRemote.reopenOffer(id);
+        return Response.ok().build();
+    }
 }

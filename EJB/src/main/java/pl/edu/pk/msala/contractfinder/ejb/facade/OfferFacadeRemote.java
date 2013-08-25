@@ -19,7 +19,11 @@ public interface OfferFacadeRemote {
 
     public Offer createOffer(Offer offer);
 
+    public void removeOffer(Long id);
+
     public List<Offer> findAccountOffers(Long accountId);
 
     public OfferData getAccountContactOffer(Long accountId, Long contractId);
+
+    void reopenOffer(Long id);
 }

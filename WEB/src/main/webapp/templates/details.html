@@ -1,8 +1,8 @@
 <div ng-init="initContract()">
     <div class="row-fluid">
         <div class="span3 details-publisher"><h4 class="details-publisher-header">Wystawiajacy</h4>
-            {{contract().account.user.firstName}}
-            {{contract().account.user.lastName}}{{contract().account.company.name}}<br/></div>
+            <a href="#/profile/{{contract().account.id}}">{{contract().account.user.firstName}}
+            {{contract().account.user.lastName}}{{contract().account.company.name}}</a><br/></div>
         <div class="span6 details-name"><h4 class="details-name-header">Nazwa</h4>{{contract().name}}</div>
         <div class="span3 details-myoffer">
             <div ui-if="isOfferAllowed() == true">
@@ -19,7 +19,13 @@
                         ui-if="getOffer().id == undefined">Złóż ofertę
                 </button>
                 <button class="btn btn-danger btn-block" type="button" ng-click="openAddOffer()"
-                        ui-if="getOffer().id != undefined">Modyfikuj ofertę
+                        ui-if="getOffer().id != undefined && (getOffer().removed == undefined || !getOffer().removed)">Modyfikuj ofertę
+                </button>
+                <button class="btn btn-danger btn-block" type="button" ng-click="removeOffer()"
+                        ui-if="getOffer().id != undefined && (getOffer().removed == undefined || !getOffer().removed)">Usuń ofertę
+                </button>
+                <button class="btn btn-danger btn-block" type="button" ng-click="reopenOffer()"
+                        ui-if="getOffer().id != undefined && getOffer().removed">Przywróć ofertę
                 </button>
             </div>
         </div>
@@ -59,9 +65,9 @@
         <div class="span3">Cena (zł)</div>
     </div>
 
-    <div ng-repeat="offer in contract().offers" class="row-fluid findListRow">
-        <div class="span2 offer-account">{{offer.account.user.firstName}}
-            {{offer.account.user.lastName}}{{offer.account.company.name}}
+    <div ng-repeat="offer in contract().offers" class="row-fluid findListRow" ng-class="{offerRemoved: removed(offer)}">
+        <div class="span2 offer-account"><a href="#/profile/{{offer.account.id}}">{{offer.account.user.firstName}}
+            {{offer.account.user.lastName}}{{offer.account.company.name}}</a>
         </div>
         <div class="span4 offer-comment">{{offer.comment}}</div>
         <div class="span3 offer-time" offerTime="" ng-model="offer"></div>

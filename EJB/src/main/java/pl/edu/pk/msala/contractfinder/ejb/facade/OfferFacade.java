@@ -24,7 +24,12 @@ public class OfferFacade implements OfferFacadeRemote {
 
     @Override
     public Offer createOffer(Offer offer) {
-        return offerManager.createOffer(offer);
+        return offerService.createOffer(offer);
+    }
+
+    @Override
+    public void removeOffer(Long id) {
+       offerManager.removeOffer(id);
     }
 
     @Override
@@ -35,5 +40,10 @@ public class OfferFacade implements OfferFacadeRemote {
     @Override
     public OfferData getAccountContactOffer(Long accountId, Long contractId) {
         return offerService.getAccountContractOffer(accountId, contractId);
+    }
+
+    @Override
+    public void reopenOffer(Long id) {
+        offerService.reopenOffer(id);
     }
 }

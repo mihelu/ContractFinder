@@ -43,4 +43,9 @@ public class ContractFacade implements ContractFacadeRemote {
     public List<AccountContractListData> findAccountContracts(Long id) {
         return contractService.findAccountContracts(id);
     }
+
+    @Override
+    public List<ContractListData> pullFinishedContracts(Long accountId) {
+        return contractService.pullFinishedContracts(accountId);
+    }
 }

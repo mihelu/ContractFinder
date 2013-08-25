@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.ejb.criteria.OrderImpl;
 import pl.edu.pk.msala.contractfinder.ejb.dto.find.ContractFindData;
-import pl.edu.pk.msala.contractfinder.ejb.entity.Category;
-import pl.edu.pk.msala.contractfinder.ejb.entity.Category_;
-import pl.edu.pk.msala.contractfinder.ejb.entity.Contract;
-import pl.edu.pk.msala.contractfinder.ejb.entity.Contract_;
+import pl.edu.pk.msala.contractfinder.ejb.entity.*;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -52,11 +49,11 @@ public class ContractManager {
             join = root.join(Contract_.categories, JoinType.LEFT);
         }
         List<Predicate> predicates = Lists.newArrayList();
-        Predicate predicateOr = builder.or(
+        Predicate predicateNameDescription = builder.or(
                 builder.like(builder.lower(root.get(Contract_.name)), "%" + StringUtils.defaultString(findData.getQuery()).toLowerCase() + "%"),
                 builder.like(builder.lower(root.get(Contract_.description)), "%" + StringUtils.defaultString(findData.getQuery()).toLowerCase() + "%")
         );
-        predicates.add(predicateOr);
+        predicates.add(predicateNameDescription);
         if (findData.getCategories() != null && !findData.getCategories().isEmpty()) {
             Predicate category = builder.isTrue(join.get(Category_.id).in(findData.getCategories()));
             predicates.add(category);
@@ -70,6 +67,25 @@ public class ContractManager {
         Order order = new OrderImpl(root.get(Contract_.publishEnd), true);
 
         query.orderBy(new Order[]{order});
+        return entityManager.createQuery(query.distinct(true)).getResultList();
+    }
+
+    public List<Contract> pullFinishedContracts(Long accountId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Contract> query = builder.createQuery(Contract.class);
+        Root<Contract> root = query.from(Contract.class);
+        Join<Contract,Account> join = root.join(Contract_.account, JoinType.LEFT);
+        List<Predicate> predicates = Lists.newArrayList();
+        Predicate publishFinished = builder.lessThan(root.get(Contract_.publishEnd), new Date());
+        predicates.add(publishFinished);
+        Predicate accountContract = builder.equal(join.get(Account_.id), accountId);
+        predicates.add(accountContract);
+        Predicate noSigned = builder.or(
+                builder.isNull(root.get(Contract_.signed))
+        );
+        predicates.add(noSigned);
+        Predicate predicate = builder.and(predicates.toArray(new Predicate[predicates.size()]));
+        query.where(predicate);
         return entityManager.createQuery(query.distinct(true)).getResultList();
     }
 

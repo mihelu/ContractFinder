@@ -60,4 +60,15 @@ public class OfferService {
         }
         return result;
     }
+
+    public Offer createOffer(Offer offer) {
+        offer.setRemoved(false);
+        return offerManager.createOffer(offer);
+    }
+
+    public void reopenOffer(Long id) {
+       Offer toModify = entityManager.find(Offer.class, id);
+       toModify.setRemoved(null);
+       offerManager.createOffer(toModify);
+    }
 }

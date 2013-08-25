@@ -20,7 +20,7 @@ public class ThrowableExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
     public Response toResponse(Throwable throwable) {
-        logger.error(throwable.getMessage());
+        logger.error(throwable);
         return Response.status(500).entity("BŁĄD WEWNĘTRZNY SYSTEMU!").type(MediaType.TEXT_PLAIN_TYPE).build();  //TODO message
     }
 }

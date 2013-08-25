@@ -10,6 +10,7 @@ import pl.edu.pk.msala.contractfinder.web.rest.security.AuthUtil;
 import pl.edu.pk.msala.contractfinder.web.session.WebSession;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionsContainer;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -47,8 +48,9 @@ public class AuthService {
                 build();
     }
 
+    @RolesAllowed("ADMIN")
     @GET
-    @Path("/ping")
+    @Path("/pingAdmin")
     public Response ping() {
        return Response.ok().build();
     }
