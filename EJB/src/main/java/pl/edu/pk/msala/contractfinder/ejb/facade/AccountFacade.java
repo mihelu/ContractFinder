@@ -9,6 +9,7 @@ import pl.edu.pk.msala.contractfinder.ejb.service.AccountService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,5 +38,20 @@ public class AccountFacade implements AccountFacadeRemote {
     @Override
     public void createAccount(Account account) throws AppRollbackException {
         accountService.createAccount(account);
+    }
+
+    @Override
+    public List<Account> findAccounts() {
+        return accountService.findAccounts();
+    }
+
+    @Override
+    public void blockAccount(Long id) {
+        accountService.blockAccount(id);
+    }
+
+    @Override
+    public void unblockAccount(Long id) {
+        accountService.unblockAccount(id);
     }
 }

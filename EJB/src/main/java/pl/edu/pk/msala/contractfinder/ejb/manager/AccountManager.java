@@ -19,6 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -68,5 +69,14 @@ public class AccountManager {
         Root<Role> root = query.from(Role.class);
         query.where(builder.equal(root.get(Role_.name), name));
         return QueryUtil.<Role>getSingleResult(entityManager.createQuery(query), "GET_ROLE_FAILED");
+    }
+
+    public List<Account> findAccounts() {
+        return entityManager.createNamedQuery(Account.ACC_FIND_ALL, Account.class).getResultList();
+    }
+
+    public void modifyAccount(Account account) {
+        entityManager.merge(account);
+        entityManager.flush();
     }
 }

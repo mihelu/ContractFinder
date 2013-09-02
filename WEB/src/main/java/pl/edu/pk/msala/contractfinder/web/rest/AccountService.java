@@ -1,5 +1,7 @@
 package pl.edu.pk.msala.contractfinder.web.rest;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import pl.edu.pk.msala.contractfinder.ejb.entity.Account;
 import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
@@ -7,9 +9,11 @@ import pl.edu.pk.msala.contractfinder.ejb.facade.AccountFacadeRemote;
 import pl.edu.pk.msala.contractfinder.web.locator.FacadeLocator;
 import pl.edu.pk.msala.contractfinder.web.session.WebSessionsContainer;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,5 +61,39 @@ public class AccountService {
         account.setLogin(null);
         account.setPassword(null);
         return Response.ok(account).build();
+    }
+
+    @GET
+    @Path("/all")
+    @RolesAllowed("ADMIN")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAccounts() {
+        List<Account> accounts = Lists.newArrayList(Lists.transform(accountFacadeRemote.findAccounts(), new Function<Account, Account>() {
+            @Override
+            public Account apply(Account input) {
+                input.setRoles(null);
+                input.setUser(null);
+                input.setCompany(null);
+                return input;
+            }
+        }));
+        return Response.ok(accounts).build();
+    }
+
+    @GET
+    @Path("/block/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void blockAccount(@PathParam("id") Long id) {
+        accountFacadeRemote.blockAccount(id);
+    }
+
+    @GET
+    @Path("/unblock/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void unblockAccount(@PathParam("id") Long id) {
+        accountFacadeRemote.unblockAccount(id);
     }
 }

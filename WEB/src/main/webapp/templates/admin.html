@@ -26,6 +26,26 @@
             <button type="button" ng-click="openCreateCategory()">Stwórz kategorie</button>
         </div>
     </div>
+    <hr class="divider"/>
+    <div class="row-fluid" ng-init="initAccounts()">
+        <div class="span9">
+            <h4>Konta użytkowników</h4>
+
+            <div class="row-fluid">
+                <div class="span6">Login</div>
+                <div class="span2">Status</div>
+                <div class="span1"></div>
+            </div>
+            <div class="row-fluid" ng-repeat="account in accounts">
+                <div class="span6">{{account.login}}</div>
+                <div class="span2">{{account.status}}</div>
+                <div class="span1">
+                    <button type="button" ui-if="account.status == 'ACTIVE'" ng-click="blockAccount(account.id)">Zablokuj</button>
+                    <button type="button" ui-if="account.status == 'BLOCKED'" ng-click="unblockAccount(account.id)">Odblokuj</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div modal="shouldCreateCategoryBeOpen" close="closeCreateCategory()" options="createCategoryModalOpts">

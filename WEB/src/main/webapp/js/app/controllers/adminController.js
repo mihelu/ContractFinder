@@ -2,6 +2,8 @@ function AdminCtrl($scope, $http) {
 
     $scope.categories = {}
 
+    $scope.accounts = {}
+
     $scope.categoryName = '';
 
     $scope.ping = function () {
@@ -29,7 +31,7 @@ function AdminCtrl($scope, $http) {
             });
     };
 
-    $scope.createCategory = function() {
+    $scope.createCategory = function () {
         console.log($scope.categoryName);
         $http.post("rest/category/create", $scope.categoryName).
             success(function (data) {
@@ -52,6 +54,27 @@ function AdminCtrl($scope, $http) {
     $scope.createCategoryModalOpts = {
         backdropFade: true,
         dialogFade: true
+    };
+
+    $scope.initAccounts = function () {
+        $http.get("/rest/account/all").
+            success(function (data) {
+                $scope.accounts = angular.copy(data);
+            });
+    };
+
+    $scope.blockAccount = function(id) {
+        $http.get("/rest/account/block/" + id).
+            success(function (data) {
+                $scope.initAccounts();
+            });
+    };
+
+    $scope.unblockAccount = function(id) {
+        $http.get("/rest/account/unblock/" + id).
+            success(function (data) {
+                $scope.initAccounts();
+            });
     };
 
 };

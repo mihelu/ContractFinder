@@ -7,6 +7,7 @@ import pl.edu.pk.msala.contractfinder.ejb.exception.AppRollbackException;
 
 import javax.ejb.Remote;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,4 +23,10 @@ public interface AccountFacadeRemote {
     public Account getAccount(Long id);
 
     public void createAccount(Account account) throws AppRollbackException;
+
+    public List<Account> findAccounts();
+
+    public void blockAccount(Long id);
+
+    public void unblockAccount(Long id);
 }

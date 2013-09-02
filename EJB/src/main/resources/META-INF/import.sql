@@ -11,8 +11,8 @@ insert into cf_category(cat_id, cat_name, cat_removed) values (nextval('cat_id_s
 INSERT INTO cf_user(use_id, use_firstname, use_lastname) VALUES (nextval('use_id_seq'), 'Michal', 'Sala')
 INSERT INTO cf_company(com_id, com_description, com_name) VALUES (nextval('com_id_seq'), 'Test company description', 'Test company')
 
-INSERT INTO cf_account(acc_id, acc_create_date, acc_login, acc_password, acc_email, acc_personal,acc_com_id, acc_use_id) VALUES (nextval('acc_id_seq'), now(), 'test', 'test', 'misieksala@gmail.com', TRUE, null , 1)
-INSERT INTO cf_account(acc_id, acc_create_date, acc_login, acc_password, acc_email, acc_personal,acc_com_id, acc_use_id) VALUES (nextval('acc_id_seq'), now(), 'test2', 'test2', 'fake@example.com', FALSE, 1 , null)
+INSERT INTO cf_account(acc_id, acc_create_date, acc_login, acc_password, acc_email, acc_personal,acc_com_id, acc_use_id, acc_status) VALUES (nextval('acc_id_seq'), now(), 'test', 'test', 'misieksala@gmail.com', TRUE, null , 1, 'ACTIVE')
+INSERT INTO cf_account(acc_id, acc_create_date, acc_login, acc_password, acc_email, acc_personal,acc_com_id, acc_use_id, acc_status) VALUES (nextval('acc_id_seq'), now(), 'test2', 'test2', 'fake@example.com', FALSE, 1 , null, 'ACTIVE')
 
 INSERT INTO cf_account_roles(aro_acc_id, aro_rol_id) VALUES (1, 1)
 INSERT INTO cf_account_roles(aro_acc_id, aro_rol_id) VALUES (1, 2)

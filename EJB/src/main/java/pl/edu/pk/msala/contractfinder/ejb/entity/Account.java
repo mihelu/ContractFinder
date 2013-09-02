@@ -19,11 +19,13 @@ import java.util.Set;
 @Entity
 @Table(name = "CF_ACCOUNT")
 @NamedQueries({
-        @NamedQuery(name = Account.ACC_GET_BY_LOGIN, query = "SELECT a FROM Account a WHERE a.login = ?1")
+        @NamedQuery(name = Account.ACC_GET_BY_LOGIN, query = "SELECT a FROM Account a WHERE a.login = ?1"),
+        @NamedQuery(name = Account.ACC_FIND_ALL, query = "SELECT a FROM Account a")
 })
 public class Account implements Serializable {
 
     public static final String ACC_GET_BY_LOGIN = "accGetByLogin";
+    public static final String ACC_FIND_ALL = "accFindAll";
     @Id
     @SequenceGenerator(name = "pk_seq", sequenceName = "acc_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_seq")
@@ -52,6 +54,9 @@ public class Account implements Serializable {
 
     @Column(name = "ACC_PERSONAL", nullable = false)
     private Boolean personal;
+
+    @Column(name = "ACC_STATUS")
+    private String status;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "CF_ACCOUNT_ROLES",
@@ -129,6 +134,14 @@ public class Account implements Serializable {
 
     public void setPersonal(Boolean personal) {
         this.personal = personal;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Set<Role> getRoles() {
